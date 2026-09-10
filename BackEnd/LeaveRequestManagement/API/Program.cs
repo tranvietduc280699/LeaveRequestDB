@@ -11,37 +11,43 @@ namespace API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            
-            // Controllers
-            builder.Services.AddControllers();
 
-            // Swagger
+            builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-       
-            // đăng ký
-            // Database
+            // 1. Đăng ký CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("Frontend", policy =>
+                {
+                    policy
+                        .WithOrigins("http://localhost:5500")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
             builder.Services.AddSingleton<DatabaseConnection>();
 
-            // DL
             builder.Services.AddScoped<IUserDL, UserDL>();
             builder.Services.AddScoped<IDepartmentDL, DepartmentDL>();
 
-            // BL
             builder.Services.AddScoped<IAuthBL, AuthBL>();
             builder.Services.AddScoped<IDepartmentBL, DepartmentBL>();
 
             var app = builder.Build();
-            // Swagger
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-          
 
             app.UseHttpsRedirection();
+
+            // 2. Sử dụng CORS
+            app.UseCors("Frontend");
 
             app.UseAuthorization();
 

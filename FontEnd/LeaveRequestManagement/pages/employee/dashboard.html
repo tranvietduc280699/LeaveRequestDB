@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang nhân viên</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/employeeCss/dashboard.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>LeaveFlow</h2>
+        <nav>
+            <a class="active" href="./dashboard.html">Tổng quan</a>
+            <a href="./leaveRequest.html">Tạo đơn nghỉ</a>
+            <a href="./myRequest.html">Đơn của tôi</a>
+            <a href="./profile.html">Hồ sơ cá nhân</a>
+        </nav>
+        <button id="logoutButton">Đăng xuất</button>
+    </div>
+
+    <main>
+        <header>
+            <div><h1>Tổng quan</h1><p>Quản lý thông tin nghỉ phép</p></div>
+            <div class="user">
+                <div>
+                    <div id="fullName"></div>
+                    <div id="position"></div>
+                </div>
+                    <div id="avatar" class="avatar">
+                </div>
+            </div>
+        </header>
+
+       <div class="content">
+    <div class="overview">
+        <div class="company-card">
+            <img src="../../assets/images/DayOff.png" alt="LeaveFlow">
+            <div class="company-content">
+                <p>Quản lý nghỉ phép đơn giản và hiệu quả</p>
+            </div>
+        </div>
+        <div class="quick-actions">
+            <h2>Bạn muốn làm gì?</h2>
+            <div class="action-list">
+                <a href="./leaveRequest.html">
+                    <div class="action-icon blue">+</div>
+                    <div><strong>Tạo đơn nghỉ phép</strong><span>Gửi một yêu cầu nghỉ mới</span></div>
+                    <b>></b>
+                </a>
+                <a href="./myRequest.html">
+                    <div class="action-icon orange">☷</div>
+                    <div><strong>Theo dõi đơn</strong><span>Xem trạng thái đơn đã gửi</span></div>
+                    <b>></b>
+                </a>
+                <a href="./profile.html">
+                    <div class="action-icon green">♙</div>
+                    <div><strong>Cập nhật hồ sơ</strong><span>Thay đổi thông tin cá nhân</span></div>
+                    <b>></b>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="bottom-content">
+        <div class="employee-information">
+            <div class="section-title">
+                <div><h2>Thông tin cá nhân</h2><p>Thông tin tài khoản của bạn</p></div>
+                <a href="./profile.html">Chỉnh sửa</a>
+            </div>
+            <div class="information-grid">
+                <div><span>Họ và tên</span><strong id="infoFullName"></strong></div>
+                <div><span>Email</span><strong id="email"></strong></div>
+                <div><span>Số điện thoại</span><strong id="phone"></strong></div>
+                <div><span>Địa chỉ</span><strong id="address"></strong></div>
+            </div>
+        </div>
+        <div class="notice">
+            <div class="notice-icon">!</div>
+            <h2>Lưu ý</h2>
+            <p>Hãy gửi đơn nghỉ phép sớm để quản lý có thời gian xem xét và phê duyệt.</p>
+            <a href="./leaveRequest.html">Tạo đơn ngay →</a>
+        </div>
+    </div>
+</div>
+    </main>
+
+    <script src="../../js/employeeJs/dashboard.js"></script>
+</body>
+</html>

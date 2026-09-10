@@ -1,0 +1,263 @@
+body {
+    display: flex;
+    overflow-y: auto;
+    .sidebar {
+        position: fixed;
+        width: 230px;
+        height: 100vh;
+        padding: 28px 20px;
+        color: white;
+        background: #1e3a8a;
+        h2 {
+            margin-bottom: 35px;
+        }
+        nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            a {
+                padding: 13px;
+                color: #dbeafe;
+                border-radius: 8px;
+                &:hover, &.active {
+                    color: white;
+                    background: #2563eb;
+                }
+            }
+        }
+        button {
+            position: absolute;
+            bottom: 25px;
+            left: 20px;
+            width: 190px;
+            padding: 12px;
+            color: white;
+            background: #da7070;
+            border: 0;
+            border-radius: 8px;
+            cursor: pointer;
+            &:hover {
+                background: #dc2626;
+            }
+        }
+    }
+    main {
+        width: calc(100% - 230px);
+        min-height: 100vh;
+        margin-left: 230px;
+        header {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            h1 {
+                font-size: 21px;
+            }
+            p {
+                margin-top: 4px;
+                color: #6b7280;
+                font-size: 12px;
+            }
+            .user {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                text-align: right;
+                #fullName {
+                    font-size: 14px;
+                    font-weight: bold;
+                }
+                #position {
+                    margin-top: 4px;
+                    color: #6b7280;
+                    font-size: 12px;
+                }
+                .avatar {
+                    width: 42px;
+                    height: 42px;
+                    display: grid;
+                    place-items: center;
+                    color: white;
+                    font-weight: bold;
+                    background: #7c3aed;
+                    border-radius: 50%;
+                }
+            }
+        }
+        .content {
+            padding:0px 30px 0px 30px;
+            .overview {
+                display: grid;
+                grid-template-columns: 1fr 1.4fr;
+                gap: 22px;
+                .company-card {
+                    overflow: hidden;
+                    background: #1e3a8a;
+                    border-radius: 16px;
+                    img {
+                        width: 100%;
+                        height: 287px;
+                        display: block;
+                        object-fit: cover;
+                    }
+                    .company-content {
+                        padding: 18px;
+                        color: white;
+                        text-align: center;
+
+                        p {
+                            font-size: 13px;
+                        }
+                    }
+                }
+                .quick-actions {
+                    padding: 25px;
+                    background: white;
+                    border-radius: 16px;
+                    h2 {
+                        margin-bottom: 18px;
+                        font-size: 18px;
+                    }
+                    .action-list {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 12px;
+                        > a {
+                            display: flex;
+                            align-items: center;
+                            gap: 14px;
+                            padding: 15px;
+                            color: #1f2937;
+                            border: 1px solid #e5e7eb;
+                            border-radius: 10px;
+                            transition: 0.2s;
+                            &:hover {
+                                border-color: #2563eb;
+                                transform: translateX(4px);
+                            }
+                            .action-icon {
+                                min-width: 43px;
+                                height: 43px;
+                                display: grid;
+                                place-items: center;
+                                color: white;
+                                font-size: 20px;
+                                border-radius: 10px;
+                                &.blue {
+                                    background: #2563eb;
+                                }
+                                &.orange {
+                                    background: #f59e0b;
+                                }
+                                &.green {
+                                    background: #10b981;
+                                }
+                            }
+                            div:nth-child(2) {
+                                flex: 1;
+                                strong {
+                                    display: block;
+                                    font-size: 14px;
+                                }
+                                span {
+                                    display: block;
+                                    margin-top: 4px;
+                                    color: #6b7280;
+                                    font-size: 12px;
+                                }
+                            }
+                            > b {
+                                color: #9ca3af;
+                                font-size: 24px;
+                            }
+                        }
+                    }
+                }
+            }
+            .bottom-content {
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                gap: 22px;
+                margin-top: 22px;
+                .employee-information {
+                    padding: 22px;
+                    background: white;
+                    border-radius: 16px;
+                    .section-title {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        margin-bottom: 22px;
+                        h2 {
+                            font-size: 18px;
+                        }
+                        p {
+                            margin-top: 4px;
+                            color: #6b7280;
+                            font-size: 12px;
+                        }
+                        a {
+                            color: #2563eb;
+                            font-size: 13px;
+                            font-weight: bold;
+                        }
+                    }
+                    .information-grid {
+                        display: grid;
+                        grid-template-columns: repeat(2, 1fr);
+                        gap: 18px;
+                        div {
+                            padding: 15px;
+                            background: #f8fafc;
+                            border-radius: 9px;
+                            span {
+                                display: block;
+                                margin-bottom: 7px;
+                                color: #6b7280;
+                                font-size: 12px;
+                            }
+                            strong {
+                                font-size: 14px;
+                            }
+                        }
+                    }
+                }
+                .notice {
+                    padding: 25px;
+                    background: #fff7ed;
+                    border: 1px solid #fed7aa;
+                    border-radius: 16px;
+                    .notice-icon {
+                        width: 38px;
+                        height: 38px;
+                        display: grid;
+                        place-items: center;
+                        color: white;
+                        font-weight: bold;
+                        background: #f59e0b;
+                        border-radius: 50%;
+                    }
+                    h2 {
+                        margin: 16px 0 9px;
+                        font-size: 17px;
+                    }
+                    p {
+                        margin-bottom: 18px;
+                        color: #6b7280;
+                        font-size: 13px;
+                        line-height: 1.6;
+                    }
+                    a {
+                        color: #ea580c;
+                        font-size: 13px;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+       
+    }
+}

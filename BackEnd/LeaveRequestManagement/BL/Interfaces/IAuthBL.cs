@@ -1,4 +1,5 @@
-﻿using Model.DTOs;
+﻿using Model.Common;
+using Model.DTOs;
 using Model.Entities;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace BL.Interfaces
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        User Login(LoginRequest request);
+        ApiResponse<User> Login(LoginRequest request);
         /// <summary>
         /// đăng ký
         /// </summary>

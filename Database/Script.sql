@@ -74,7 +74,7 @@ CREATE TABLE LEAVE_REQUESTS (
         REFERENCES USERS(ID)
 );
 // thêm mặc định phòng ban
-select * from DEPARTMENTS
+select * from USERS
 
 INSERT INTO DEPARTMENTS (CODE, NAME, STATUS)
 VALUES
@@ -83,3 +83,6 @@ VALUES
 ('ACC', 'Phòng Kế toán', 1),
 ('MKT', 'Phòng Marketing', 1),
 ('SALE', 'Phòng Kinh doanh', 1);
+
+INSERT INTO Users (employee_code, full_name, email, password, phone, address, position, department_id, role, status, created_at, updated_at)
+VALUES ('MN001', N'Việt Đức', 'tranvietducManager@gmail.com', '123456', '01080880699', N'Hà Nội', N'Quản lý', 1, 2, 1, NOW(), NOW());

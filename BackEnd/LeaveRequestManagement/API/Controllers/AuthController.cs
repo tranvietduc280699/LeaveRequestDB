@@ -26,8 +26,12 @@ namespace API.Controllers
         public IActionResult Login(LoginRequest request)
         {
             var result = _authBL.Login(request);
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
 
-            return Ok(ApiResponse<object>.SuccessResponse(result, "Đăng nhập thành công"));
+            return Ok(result);
         }
         /// <summary>
         /// đăng ký

@@ -1,5 +1,6 @@
 ﻿using BL.Interfaces;
 using DL.Interfaces;
+using Model.Common;
 using Model.DTOs;
 using Model.Entities;
 using Model.Enums;
@@ -20,28 +21,45 @@ namespace BL
         {
             _userDL = userDL;
         }
+
         /// <summary>
         /// Kiểm tra thông tin đăng nhập
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public User Login(LoginRequest request)
+        public ApiResponse<User> Login(LoginRequest request)
         {
-            User user = _userDL.GetByEmail(request.Email);
+            User? user = _userDL.GetByEmail(request.Email);
             if (user == null)
             {
-                throw new Exception("Email không tồn tại");
+                return ApiResponse<User>.ErrorResponse(
+                    "EMAIL_NOT_FOUND",
+                    "Email không tồn tại"
+                );
             }
+
             if (user.Password != request.Password)
             {
-                throw new Exception("Email hoặc mật khẩu không chính xác");
+                return ApiResponse<User>.ErrorResponse(
+                    "INVALID_PASSWORD",
+                    "Email hoặc mật khẩu không chính xác"
+                );
             }
-            if (user.Status != UserStatus.Inactive)
+
+            if (user.Status == UserStatus.Inactive)
             {
-                throw new Exception("Tài khoản đã ngừng hoạt động");
+                return ApiResponse<User>.ErrorResponse(
+                    "ACCOUNT_INACTIVE",
+                    "Tài khoản đã ngừng hoạt động"
+                );
             }
-            return user;
+            // Không trả mật khẩu về frontend
+            user.Password = string.Empty;
+            return ApiResponse<User>.SuccessResponse(
+                user,
+                "Đăng nhập thành công"
+            );
         }
         /// <summary>
         /// Kiểm tra thông tin đăng ký

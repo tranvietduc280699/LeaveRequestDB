@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Đơn của tôi</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/employeeCss/dashboard.css">
+    <link rel="stylesheet" href="../../css/employeeCss/myRequest.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>LeaveFlow</h2>
+        <nav>
+            <a href="./dashboard.html">Tổng quan</a>
+            <a href="./leaveRequest.html">Tạo đơn nghỉ</a>
+            <a class="active" href="./myRequest.html">Đơn của tôi</a>
+            <a href="../user/profile.html">Hồ sơ cá nhân</a>
+        </nav>
+        <button id="logoutButton">Đăng xuất</button>
+    </div>
+    <main>
+        <header>
+            <div>
+                <h1>Đơn của tôi</h1>
+                <p>Theo dõi các yêu cầu nghỉ phép đã gửi</p>
+            </div>
+            <div class="user">
+                <div>
+                    <div id="fullName"></div>
+                    <div id="position"></div>
+                </div>
+                <img id="avatar" class="avatar" src="../../assets/images/cute.jpg" alt="Ảnh đại diện">
+            </div>
+        </header>
+        <div class="my-request-content">
+            <div class="page-action">
+                <div>
+                    <h2>Danh sách đơn nghỉ</h2>
+                    <p>Tìm kiếm và theo dõi trạng thái đơn</p>
+                </div>
+                <a href="./leaveRequest.html">+ Tạo đơn mới</a>
+            </div>
+            <div class="filter-box">
+                <div class="search-input">
+                    <label for="keyword">Mã đơn</label>
+                    <input type="text" id="keyword" placeholder="Nhập mã đơn...">
+                </div>
+                <div>
+                    <label for="leaveTypeFilter">Loại nghỉ</label>
+                    <select id="leaveTypeFilter">
+                        <option value="">Tất cả loại nghỉ</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="statusFilter">Trạng thái</label>
+                    <select id="statusFilter">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="1">Chờ duyệt</option>
+                        <option value="2">Đã duyệt</option>
+                        <option value="3">Từ chối</option>
+                        <option value="4">Đã hủy</option>
+                    </select>
+                </div>
+                <button id="searchButton">Tìm kiếm</button>
+                <button id="resetButton" class="reset-button">Đặt lại</button>
+            </div>
+            <div class="request-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Mã đơn</th>
+                            <th>Loại nghỉ</th>
+                            <th>Thời gian</th>
+                            <th>Số ngày</th>
+                            <th>Ngày gửi</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="requestTableBody"></tbody>
+                </table>
+                <div id="emptyRequest" class="empty-request">
+                    Không tìm thấy đơn nghỉ phép
+                </div>
+            </div>
+        </div>
+    </main>
+    <div id="detailPopup" class="popup">
+        <div class="popup-contentnehm">
+            <div class="popup-header">
+                <h2>Chi tiết đơn nghỉ</h2>
+                <button id="lishesPopup">×</button>
+            </div>
+            <div class="detail-grid">
+                <div>
+                    <span>Mã đơn</span>
+                    <strong id="detailCode"></strong>
+                </div>
+                <div>
+                    <span>Loại nghỉ</span>
+                    <strong id="detailType"></strong>
+                </div>
+                <div>
+                    <span>Ngày bắt đầu</span>
+                    <strong id="detailStartDate"></strong>
+                </div>
+                <div>
+                    <span>Ngày kết thúc</span>
+                    <strong id="detailEndDate"></strong>
+                </div>
+                <div>
+                    <span>Số ngày nghỉ</span>
+                    <strong id="detailDays"></strong>
+                </div>
+                <div>
+                    <span>Trạng thái</span>
+                    <strong id="detailStatus"></strong>
+                </div>
+                <div class="full-width">
+                    <span>Lý do</span>
+                    <strong id="detailReason"></strong>
+                </div>
+                <div class="full-width">
+                    <span>Người bàn giao</span>
+                    <strong id="detailHandover"></strong>
+                </div>
+                <div class="full-width">
+                    <span>Phản hồi quản lý</span>
+                    <strong id="detailResponse"></strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="../../js/employeeJs/myRequest.js"></script>
+</body>
+</html>

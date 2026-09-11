@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Quản lý nhân viên</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/managerCss/managerDashboard.css">
+    <link rel="stylesheet" href="../../css/managerCss/employeeManagement.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">LeaveFlow</div>
+        <nav>
+            <a href="./managerDashboard.html">Tổng quan</a>
+            <a href="./requestApproval.html">Duyệt đơn nghỉ</a>
+            <a class="active" href="./employeeManagement.html">Quản lý nhân viên</a>
+            <a href="../user/profile.html">Hồ sơ cá nhân</a>
+        </nav>
+        <button id="logoutButton" type="button">Đăng xuất</button>
+    </div>
+    <div class="main">
+        <div class="header">
+            <div>
+                <div class="page-title">Quản lý nhân viên</div>
+                <div class="page-description">Theo dõi thông tin nhân viên trong phòng ban</div>
+            </div>
+            <div class="user">
+                <div class="user-information">
+                    <div class="user-name">Việt Đức</div>
+                    <div class="user-position">Quản lý</div>
+                </div>
+                <img class="avatar" src="../../assets/images/cute.jpg" alt="Ảnh đại diện">
+            </div>
+        </div>
+        <div class="employee-content">
+            <div class="employee-summary">
+                <div class="summary-card">
+                    <div class="summary-icon blue">👥</div>
+                    <div>
+                        <div class="summary-label">Tổng nhân viên</div>
+                        <div class="summary-number">36</div>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-icon green">✓</div>
+                    <div>
+                        <div class="summary-label">Đang hoạt động</div>
+                        <div class="summary-number">34</div>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-icon red">×</div>
+                    <div>
+                        <div class="summary-label">Ngừng hoạt động</div>
+                        <div class="summary-number">2</div>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-box">
+                <div class="filter-item search">
+                    <label for="keyword">Tìm kiếm nhân viên</label>
+                    <input id="keyword" type="text" placeholder="Nhập tên, mã nhân viên hoặc email">
+                </div>
+                <div class="filter-item">
+                    <label for="departmentFilter">Phòng ban</label>
+                    <select id="departmentFilter">
+                        <option value="">Tất cả phòng ban</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="statusFilter">Trạng thái</label>
+                    <select id="statusFilter">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="1">Đang hoạt động</option>
+                        <option value="0">Ngừng hoạt động</option>
+                    </select>
+                </div>
+                <button class="search-button" type="button">Tìm kiếm</button>
+                <button class="reset-button" type="button">Đặt lại</button>
+            </div>
+            <div class="employee-list">
+                <div class="list-header">
+                    <div>
+                        <div class="list-title">Danh sách nhân viên</div>
+                        <div class="list-description">Thông tin nhân viên thuộc phòng ban của bạn</div>
+                    </div>
+                </div>
+                <div class="employee-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nhân viên</th>
+                                <th>Mã nhân viên</th>
+                                <th>Liên hệ</th>
+                                <th>Chức vụ</th>
+                                <th>Phòng ban</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="employee">
+                                        <img src="../../assets/images/cute.jpg" alt="Nhân viên">
+                                        <div class="employee-name">Nguyễn Văn An</div>
+                                    </div>
+                                </td>
+                                <td>NV001</td>
+                                <td>
+                                    <div class="contact-email">nguyenvanan@gmail.com</div>
+                                    <div class="contact-phone">0361234567</div>
+                                </td>
+                                <td>Nhân viên</td>
+                                <td>Công nghệ thông tin</td>
+                                <td>
+                                    <div class="status active">Đang hoạt động</div>
+                                </td>
+                                <td>
+                                    <div class="actions">
+                                        <button class="profile-button" type="button">Thông tin</button>
+                                        <button class="request-button" type="button">Đơn nghỉ</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="employee">
+                                        <img src="../../assets/images/cute.jpg" alt="Nhân viên">
+                                        <div class="employee-name">Trần Thị Mai</div>
+                                    </div>
+                                </td>
+                                <td>NV002</td>
+                                <td>
+                                    <div class="contact-email">tranthimai@gmail.com</div>
+                                    <div class="contact-phone">0387654321</div>
+                                </td>
+                                <td>Nhân viên</td>
+                                <td>Công nghệ thông tin</td>
+                                <td>
+                                    <div class="status active">Đang hoạt động</div>
+                                </td>
+                                <td>
+                                    <div class="actions">
+                                        <button class="profile-button" type="button">Thông tin</button>
+                                        <button class="request-button" type="button">Đơn nghỉ</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="employee">
+                                        <img src="../../assets/images/cute.jpg" alt="Nhân viên">
+                                        <div class="employee-name">Lê Văn Nam</div>
+                                    </div>
+                                </td>
+                                <td>NV003</td>
+                                <td>
+                                    <div class="contact-email">levannam@gmail.com</div>
+                                    <div class="contact-phone">0359876543</div>
+                                </td>
+                                <td>Nhân viên</td>
+                                <td>Công nghệ thông tin</td>
+                                <td>
+                                    <div class="status inactive">Ngừng hoạt động</div>
+                                </td>
+                                <td>
+                                    <div class="actions">
+                                        <button class="profile-button" type="button">Thông tin</button>
+                                        <button class="request-button" type="button">Đơn nghỉ</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

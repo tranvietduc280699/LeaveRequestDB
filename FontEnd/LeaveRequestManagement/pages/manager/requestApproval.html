@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Duyệt đơn nghỉ</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/managerCss/managerDashboard.css">
+    <link rel="stylesheet" href="../../css/managerCss/requestApproval.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">LeaveFlow</div>
+        <nav>
+            <a href="./managerDashboard.html">Tổng quan</a>
+            <a class="active" href="./requestApproval.html">Duyệt đơn nghỉ</a>
+            <a href="./employeeManagement.html">Quản lý nhân viên</a>
+            <a href="../user/profile.html">Hồ sơ cá nhân</a>
+        </nav>
+        <button id="logoutButton" type="button">Đăng xuất</button>
+    </div>
+    <div class="main">
+        <div class="header">
+            <div>
+                <div class="page-title">Duyệt đơn nghỉ</div>
+                <div class="page-description">Xem và xử lý yêu cầu nghỉ phép của nhân viên</div>
+            </div>
+            <div class="user">
+                <div class="user-information">
+                    <div class="user-name">Việt Đức</div>
+                    <div class="user-position">Quản lý</div>
+                </div>
+                <img class="avatar" src="../../assets/images/cute.jpg" alt="Ảnh đại diện">
+            </div>
+        </div>
+        <div class="approval-content">
+            <div class="summary">
+                <div class="summary-item pending">
+                    <div class="summary-icon">⌛</div>
+                    <div>
+                        <div class="summary-label">Chờ duyệt</div>
+                        <div class="summary-number">8</div>
+                    </div>
+                </div>
+                <div class="summary-item approved">
+                    <div class="summary-icon">✓</div>
+                    <div>
+                        <div class="summary-label">Đã duyệt</div>
+                        <div class="summary-number">24</div>
+                    </div>
+                </div>
+                <div class="summary-item rejected">
+                    <div class="summary-icon">×</div>
+                    <div>
+                        <div class="summary-label">Từ chối</div>
+                        <div class="summary-number">3</div>
+                    </div>
+                </div>
+            </div>
+            <div class="filter-box">
+                <div class="filter-item search">
+                    <label for="keyword">Tìm kiếm</label>
+                    <input id="keyword" type="text" placeholder="Tên nhân viên hoặc mã đơn">
+                </div>
+                <div class="filter-item">
+                    <label for="leaveType">Loại nghỉ</label>
+                    <select id="leaveType">
+                        <option value="">Tất cả loại nghỉ</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="status">Trạng thái</label>
+                    <select id="status">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="1">Chờ duyệt</option>
+                        <option value="2">Đã duyệt</option>
+                        <option value="3">Đã từ chối</option>
+                        <option value="4">Đã hủy</option>
+                    </select>
+                </div>
+                <button class="search-button" type="button">Tìm kiếm</button>
+                <button class="reset-button" type="button">Đặt lại</button>
+            </div>
+            <div class="request-list">
+                <div class="list-header">
+                    <div>
+                        <div class="list-title">Danh sách đơn nghỉ</div>
+                        <div class="list-description">Có 8 đơn đang chờ xử lý</div>
+                    </div>
+                </div>
+                <div class="request-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Mã đơn</th>
+                                <th>Nhân viên</th>
+                                <th>Loại nghỉ</th>
+                                <th>Thời gian nghỉ</th>
+                                <th>Số ngày</th>
+                                <th>Lý do</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>LR0008</td>
+                                <td>
+                                    <div class="employee">
+                                        <img src="../../assets/images/cute.jpg" alt="Nhân viên">
+                                        <div>
+                                            <div class="employee-name">Nguyễn Văn An</div>
+                                            <div class="employee-code">NV008</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Nghỉ phép năm</td>
+                                <td>
+                                    <div>15/09/2026</div>
+                                    <div class="end-date">đến 16/09/2026</div>
+                                </td>
+                                <td>2 ngày</td>
+                                <td>
+                                    <div class="reason">Giải quyết công việc gia đình</div>
+                                </td>
+                                <td>
+                                    <div class="status pending">Chờ duyệt</div>
+                                </td>
+                                <td>
+                                    <div class="actions">
+                                        <button class="detail-button" type="button">Chi tiết</button>
+                                        <button class="approve-button" type="button">Duyệt</button>
+                                        <button class="reject-button" type="button">Từ chối</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>LR0007</td>
+                                <td>
+                                    <div class="employee">
+                                        <img src="../../assets/images/cute.jpg" alt="Nhân viên">
+                                        <div>
+                                            <div class="employee-name">Trần Thị Mai</div>
+                                            <div class="employee-code">NV007</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Nghỉ ốm</td>
+                                <td>
+                                    <div>12/09/2026</div>
+                                    <div class="end-date">đến 12/09/2026</div>
+                                </td>
+                                <td>1 ngày</td>
+                                <td>
+                                    <div class="reason">Khám sức khỏe</div>
+                                </td>
+                                <td>
+                                    <div class="status approved">Đã duyệt</div>
+                                </td>
+                                <td>
+                                    <div class="actions">
+                                        <button class="detail-button" type="button">Chi tiết</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>LR0006</td>
+                                <td>
+                                    <div class="employee">
+                                        <img src="../../assets/images/cute.jpg" alt="Nhân viên">
+                                        <div>
+                                            <div class="employee-name">Lê Văn Nam</div>
+                                            <div class="employee-code">NV006</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Nghỉ không lương</td>
+                                <td>
+                                    <div>20/09/2026</div>
+                                    <div class="end-date">đến 22/09/2026</div>
+                                </td>
+                                <td>3 ngày</td>
+                                <td>
+                                    <div class="reason">Có việc cá nhân cần giải quyết</div>
+                                </td>
+                                <td>
+                                    <div class="status rejected">Đã từ chối</div>
+                                </td>
+                                <td>
+                                    <div class="actions">
+                                        <button class="detail-button" type="button">Chi tiết</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

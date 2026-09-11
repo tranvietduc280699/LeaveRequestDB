@@ -78,17 +78,13 @@ body {
                 .avatar {
                     width: 42px;
                     height: 42px;
-                    display: grid;
-                    place-items: center;
-                    color: white;
-                    font-weight: bold;
-                    background: #7c3aed;
+                    object-fit: cover;
                     border-radius: 50%;
                 }
             }
         }
         .content {
-            padding:0px 30px 0px 30px;
+            padding:6px 30px 0px 30px;
             .overview {
                 display: grid;
                 grid-template-columns: 1fr 1.4fr;

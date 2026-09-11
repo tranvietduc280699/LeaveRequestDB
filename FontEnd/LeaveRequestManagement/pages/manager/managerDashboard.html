@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Tổng quan quản lý</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/managerCss/managerDashboard.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">LeaveFlow</div>
+        <nav>
+            <a class="active" href="./managerDashboard.html">Tổng quan</a>
+            <a href="./requestApproval.html">Duyệt đơn nghỉ</a>
+            <a href="./employeeManagement.html">Quản lý nhân viên</a>
+            <a href="../user/profile.html">Hồ sơ cá nhân</a>
+        </nav>
+        <button id="logoutButton" type="button">Đăng xuất</button>
+    </div>
+    <div class="main">
+        <div class="header">
+            <div>
+                <div class="page-title">Tổng quan quản lý</div>
+                <div class="page-description">Theo dõi và xử lý yêu cầu nghỉ phép</div>
+            </div>
+            <div class="user">
+                <div class="user-information">
+                    <div id="fullName" class="user-name"></div>
+                    <div id="position" class="user-position"></div>
+                </div>
+                <img class="avatar" src="../../assets/images/cute.jpg" alt="Ảnh đại diện">
+            </div>
+        </div>
+        <div class="dashboard-content">
+            <div class="welcome-card">
+                <div>
+                    <div class="welcome-label">Xin chào quản lý</div>
+                    <div id="welcomeName" class="welcome-name"></div>
+                    <div class="welcome-description">Bạn có thể theo dõi và xử lý các đơn nghỉ phép tại đây.</div>
+                </div>
+                <a href="./requestApproval.html">Xem đơn chờ duyệt</a>
+            </div>
+            <div class="statistics">
+                <div class="statistic-card pending">
+                    <div class="statistic-icon">⌛</div>
+                    <div class="statistic-information">
+                        <div class="statistic-label">Đơn chờ duyệt</div>
+                        <div id="pendingCount" class="statistic-number">0</div>
+                    </div>
+                </div>
+                <div class="statistic-card approved">
+                    <div class="statistic-icon">✓</div>
+                    <div class="statistic-information">
+                        <div class="statistic-label">Đã duyệt</div>
+                        <div id="approvedCount" class="statistic-number">0</div>
+                    </div>
+                </div>
+                <div class="statistic-card rejected">
+                    <div class="statistic-icon">×</div>
+                    <div class="statistic-information">
+                        <div class="statistic-label">Đã từ chối</div>
+                        <div id="rejectedCount" class="statistic-number">0</div>
+                    </div>
+                </div>
+                <div class="statistic-card employee">
+                    <div class="statistic-icon">👥</div>
+                    <div class="statistic-information">
+                        <div class="statistic-label">Nhân viên</div>
+                        <div id="employeeCount" class="statistic-number">0</div>
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-bottom">
+                <div class="recent-requests">
+                    <div class="section-header">
+                        <div>
+                            <div class="section-title">Đơn nghỉ mới nhất</div>
+                            <div class="section-description">Các yêu cầu đang chờ xử lý</div>
+                        </div>
+                        <a href="./requestApproval.html">Xem tất cả</a>
+                    </div>
+                    <div id="requestList" class="request-list">
+                        <div class="empty-data">Chưa có đơn nghỉ cần xử lý</div>
+                    </div>
+                </div>
+                <div class="quick-actions">
+                    <div class="section-title">Thao tác nhanh</div>
+                    <a href="./requestApproval.html">
+                        <div class="action-icon blue">✓</div>
+                        <div class="action-information">
+                            <div class="action-title">Duyệt đơn nghỉ</div>
+                            <div class="action-description">Xử lý yêu cầu của nhân viên</div>
+                        </div>
+                        <div class="arrow">></div>
+                    </a>
+                    <a href="./employeeManagement.html">
+                        <div class="action-icon green">♙</div>
+                        <div class="action-information">
+                            <div class="action-title">Quản lý nhân viên</div>
+                            <div class="action-description">Xem danh sách nhân viên</div>
+                        </div>
+                        <div class="arrow">></div>
+                    </a>
+                    <a href="../user/profile.html">
+                        <div class="action-icon purple">⚙</div>
+                        <div class="action-information">
+                            <div class="action-title">Hồ sơ cá nhân</div>
+                            <div class="action-description">Xem thông tin tài khoản</div>
+                        </div>
+                        <div class="arrow">></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="../../js/managerJs/managerDashboard.js"></script>
+</body>
+</html>

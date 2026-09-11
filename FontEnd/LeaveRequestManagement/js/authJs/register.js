@@ -1,5 +1,5 @@
-import { getApi, postApi } from "./api.js";
-import User from "./models/userModel.js";
+import { getApi, postApi } from "../api.js";
+import User from "../models/userModel.js";
 
 const departmentSelect = document.getElementById("departmentId");
 const registerForm = document.getElementById("registerForm");

@@ -1,0 +1,155 @@
+main {
+    .request-content {
+        height: calc(100vh - 75px);
+        padding: 25px;
+        overflow-y: auto;
+        form {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 28px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 3px 15px #0000000d;
+            .form-header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #e5e7eb;
+                h2 {
+                    font-size: 20px;
+                }
+                p {
+                    margin-top: 5px;
+                    color: #6b7280;
+                    font-size: 12px;
+                    b {
+                        color: #dc2626;
+                    }
+                }
+                .draft-status {
+                    padding: 7px 12px;
+                    color: #2563eb;
+                    font-size: 12px;
+                    background: #eff6ff;
+                    border-radius: 18px;
+                }
+            }
+            .employee-box {
+                display: grid;
+                grid-template-columns: repeat(3,1fr);
+                gap: 15px;
+                margin: 22px 0;
+                padding: 18px;
+                background: #f8fafc;
+                border-radius: 10px;
+                div {
+                    span {
+                        display: block;
+                        margin-bottom: 6px;
+                        color: #6b7280;
+                        font-size: 12px;
+                    }
+                    strong {
+                        font-size: 14px;
+                    }
+                }
+            }
+            .form-grid {
+                display: grid;
+                grid-template-columns: repeat(2,1fr);
+                gap: 18px;
+                .form-group {
+                    label {
+                        display: block;
+                        margin-bottom: 8px;
+                        font-size: 13px;
+                        font-weight: bold;
+                        b {
+                            color: #dc2626;
+                        }
+                    }
+                    input,select,textarea {
+                        width: 100%;
+                        padding: 12px;
+                        font-family: inherit;
+                        font-size: 13px;
+                        background: white;
+                        border: 1px solid #d1d5db;
+                        border-radius: 8px;
+                        outline: none;
+                        &:focus {
+                            border-color: #2563eb;
+                            box-shadow: 0 0 0 3px #2563eb15;
+                        }
+                    }
+                    input,select {
+                        height: 43px;
+                    }
+                    input[readonly] {
+                        color: #2563eb;
+                        font-weight: bold;
+                        background: #f8fafc;
+                    }
+                    textarea {
+                        min-height: 95px;
+                        resize: vertical;
+                    }
+                    
+                    &.full-width {
+                        grid-column: 1/-1;
+                    }
+                }
+            }
+            .form-message {
+                display: none;
+                margin-top: 15px;
+                padding: 12px;
+                font-size: 13px;
+                border-radius: 8px;
+                &.error {
+                    display: block;
+                    color: #b91c1c;
+                    background: #fee2e2;
+                }
+                &.success {
+                    display: block;
+                    color: #15803d;
+                    background: #dcfce7;
+                }
+            }
+            .form-actions {
+                display: flex;
+                justify-content: flex-end;
+                gap: 12px;
+                margin-top: 22px;
+                padding-top: 20px;
+                border-top: 1px solid #e5e7eb;
+                a,button {
+                    padding: 11px 18px;
+                    font-size: 13px;
+                    font-weight: bold;
+                    border-radius: 8px;
+                }
+                a {
+                    color: #4b5563;
+                    background: #f3f4f6;
+                }
+                button {
+                    color: white;
+                    background: #2563eb;
+                    border: 0;
+                    cursor: pointer;
+                    &:hover {
+                        background: #1d4ed8;
+                    }
+                    &:disabled {
+                        background: #93c5fd;
+                        cursor: not-allowed;
+                    }
+                }
+            }
+        }
+    }
+}

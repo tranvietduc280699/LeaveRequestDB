@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Tạo đơn nghỉ phép</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/employeeCss/dashboard.css">
+    <link rel="stylesheet" href="../../css/employeeCss/leaveRequest.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>LeaveFlow</h2>
+         <nav>
+            <a href="./dashboard.html">Tổng quan</a>
+            <a class="active" href="./leaveRequest.html">Tạo đơn nghỉ</a>
+            <a href="./myRequest.html">Đơn của tôi</a>
+            <a href="../user/profile.html">Hồ sơ cá nhân</a>
+        </nav>
+        <button id="logoutButton">Đăng xuất</button>
+    </div>
+    <main>
+        <header>
+            <div><h1>Tạo đơn nghỉ phép</h1><p>Điền thông tin và gửi đơn đến quản lý</p></div>
+            <div class="user">
+                <div><div id="fullName"></div><div id="position"></div></div>
+                <div id="avatar" class="avatar"></div>
+            </div>
+        </header>
+        <div class="request-content">
+            <form id="leaveRequestForm">
+                <div class="form-header">
+                    <div><h2>Thông tin đơn nghỉ</h2><p>Các trường có dấu <b>*</b> là bắt buộc</p></div>
+                    <span class="draft-status">Đơn mới</span>
+                </div>
+                <div class="employee-box">
+                    <div><span>Nhân viên</span><strong id="employeeName"></strong></div>
+                    <div><span>Mã nhân viên</span><strong id="employeeCode"></strong></div>
+                    <div><span>Chức vụ</span><strong id="employeePosition"></strong></div>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="leaveTypeId">Loại nghỉ <b>*</b></label>
+                        <select id="leaveTypeId" required>
+                            <option value="">-- Chọn loại nghỉ --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="startDate">Ngày bắt đầu <b>*</b></label>
+                        <input type="date" id="startDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">Ngày kết thúc <b>*</b></label>
+                        <input type="date" id="endDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="numberOfDays">Số ngày nghỉ</label>
+                        <input type="number" id="numberOfDays" step="0.5" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="handoverPerson">Người bàn giao</label>
+                        <input type="text" id="handoverPerson" maxlength="100" placeholder="Nhập tên người nhận bàn giao">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="reason">Lý do nghỉ <b>*</b></label>
+                        <textarea id="reason" maxlength="1000" placeholder="Nhập lý do nghỉ phép" required></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="note">Ghi chú</label>
+                        <textarea id="note" maxlength="500" placeholder="Thông tin bổ sung nếu có"></textarea>
+                    </div>
+                </div>
+                <div id="formMessage" class="form-message"></div>
+                <div class="form-actions">
+                    <a href="../employee/dashboard.html">Hủy</a>
+                    <button type="submit" id="submitButton">Gửi đơn nghỉ phép</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <script type="module" src="../../js/employeeJs/leaveRequest.js"></script>
+</body>
+</html>

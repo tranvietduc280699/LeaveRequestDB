@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Hồ sơ cá nhân</title>
+    <link rel="stylesheet" href="../../css/common.css">
+    <link rel="stylesheet" href="../../css/employeeCss/dashboard.css">
+    <link rel="stylesheet" href="../../css/userCss/profile.css">
+    <link rel="stylesheet" href="../../css/userCss/profilePopup.css">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>LeaveFlow</h2>
+        <nav>
+            <a id="dashboardLink">Tổng quan</a>
+            <a id="requestLink"></a>
+            <a id="managementLink"></a>
+            <a class="active" href="./profile.html">Hồ sơ cá nhân</a>
+        </nav>
+        <button id="logoutButton">Đăng xuất</button>
+    </div>
+    <div class="main">
+        <div class="header">
+            <div>
+                <div class="page-title">Hồ sơ cá nhân</div>
+                <div class="page-description">Xem thông tin tài khoản của bạn</div>
+            </div>
+            <div class="user">
+                <div>
+                    <div id="fullName" class="header-name"></div>
+                    <div id="position" class="header-position"></div>
+                </div>
+                <img id="avatar" class="avatar" src="../../assets/images/cute.jpg">
+            </div>
+        </div>
+        <div class="profile-content">
+            <div class="profile-left">
+                <img id="largeAvatar" class="large-avatar" src="../../assets/images/cute.jpg">
+                <div id="profileFullName" class="profile-name"></div>
+                <div id="profileEmployeeCode" class="profile-code"></div>
+                <div id="profileStatus" class="active-status">
+                    <div class="status-dot"></div>
+                    <div class="status-text"></div>
+                </div>
+            </div>
+            <div class="profile-right">
+            <div class="profile-heading">
+                <div>
+                    <div class="profile-title">Thông tin cá nhân</div>
+                    <div class="profile-description">Thông tin được lưu trong tài khoản của bạn</div>
+                </div>
+                <div id="editProfileButton" class="edit-profile-button">Chỉnh sửa hồ sơ</div>
+            </div>
+            <div class="information-grid">
+                <div class="information-item">
+                    <div class="information-label">Họ và tên</div>
+                    <div id="infoFullName" class="information-value"></div>
+                </div>
+                <div class="information-item">
+                    <div class="information-label">Mã nhân viên</div>
+                    <div id="infoEmployeeCode" class="information-value"></div>
+                </div>
+                <div class="information-item">
+                    <div class="information-label">Email</div>
+                    <div id="infoEmail" class="information-value"></div>
+                </div>
+                <div class="information-item">
+                    <div class="information-label">Số điện thoại</div>
+                    <div id="infoPhone" class="information-value"></div>
+                </div>
+                <div class="information-item">
+                    <div class="information-label">Chức vụ</div>
+                    <div id="infoPosition" class="information-value"></div>
+                </div>
+                <div class="information-item">
+                    <div class="information-label">Phòng ban</div>
+                    <div id="infoDepartment" class="information-value"></div>
+                </div>
+                <div class="information-item full-width">
+                    <div class="information-label">Địa chỉ</div>
+                    <div id="infoAddress" class="information-value"></div>
+                </div>
+            </div>
+            <div class="account-box">
+                <div class="account-title">Thông tin tài khoản</div>
+                <div id="accountInformation" class="account-description"></div>
+            </div>
+        </div>
+        </div>
+    </div>
+    <div id="profilePopupContainer"></div>
+    <script type="module" src="../../js/userJs/profile.js"></script>
+</body>
+</html>

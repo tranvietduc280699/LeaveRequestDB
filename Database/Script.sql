@@ -73,16 +73,33 @@ CREATE TABLE LEAVE_REQUESTS (
         FOREIGN KEY (MANAGER_ID)
         REFERENCES USERS(ID)
 );
-// thêm mặc định phòng ban
-select * from USERS
 
+// thêm mặc định phòng ban
 INSERT INTO DEPARTMENTS (CODE, NAME, STATUS)
 VALUES
 ('IT', 'Phòng Công nghệ thông tin', 1),
 ('HR', 'Phòng Nhân sự', 1),
 ('ACC', 'Phòng Kế toán', 1),
+('FIN', 'Phòng Tài chính', 1),
+('ADMIN', 'Phòng Hành chính', 1),
 ('MKT', 'Phòng Marketing', 1),
-('SALE', 'Phòng Kinh doanh', 1);
+('SALE', 'Phòng Kinh doanh', 1),
+('CS', 'Phòng Chăm sóc khách hàng', 1),
+('LEGAL', 'Phòng Pháp chế', 1),
+('OTHER', 'Khác', 1);
 
+// thêm mặc định loại nghỉ phép
+INSERT INTO LEAVE_TYPES (CODE, NAME, DESCRIPTION, STATUS)
+VALUES
+('ANNUAL', 'Nghỉ phép năm', 'Sử dụng ngày phép năm', 1),
+('SICK', 'Nghỉ ốm', 'Nghỉ do ốm hoặc điều trị bệnh', 1),
+('PERSONAL', 'Nghỉ việc riêng', 'Nghỉ để giải quyết công việc cá nhân', 1),
+('MARRIAGE', 'Nghỉ kết hôn', 'Nghỉ để tổ chức kết hôn', 1),
+('BEREAVEMENT', 'Nghỉ tang', 'Nghỉ khi gia đình có tang', 1),
+('MATERNITY', 'Nghỉ thai sản', 'Nghỉ liên quan đến sinh con và chăm sóc con', 1),
+('UNPAID', 'Nghỉ không lương', 'Nghỉ không hưởng lương', 1),
+('OTHER', 'Khác', 'Trường hợp khác, ghi rõ trong lý do nghỉ', 1);
+
+//thêm dữ liệu mẫu cho quản lý
 INSERT INTO Users (employee_code, full_name, email, password, phone, address, position, department_id, role, status, created_at, updated_at)
 VALUES ('MN001', N'Việt Đức', 'tranvietducManager@gmail.com', '123456', '01080880699', N'Hà Nội', N'Quản lý', 1, 2, 1, NOW(), NOW());

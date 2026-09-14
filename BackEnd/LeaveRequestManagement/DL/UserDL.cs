@@ -58,6 +58,7 @@ namespace DL
 
             return Convert.ToInt64(command.ExecuteScalar()) > 0;
         }
+
         /// <summary>
         /// đăng nhập theo mail
         /// </summary>
@@ -102,6 +103,11 @@ namespace DL
                 UpdatedAt = Convert.ToDateTime(reader["UPDATED_AT"])
             };
         }
+        /// <summary>
+        /// đăng ký người dùng mới  
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
 
         public long Insert(User user)
         {

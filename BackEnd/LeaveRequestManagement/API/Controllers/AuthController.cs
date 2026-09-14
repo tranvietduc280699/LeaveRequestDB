@@ -43,7 +43,7 @@ namespace API.Controllers
         {
             var result = _authBL.Register(user);
 
-            return Ok(ApiResponse<object>.SuccessResponse(result, "Đăng ký thành công"));
+            return Ok(ApiResponse<User>.SuccessResponse(result, "Đăng ký thành công"));
         }
     }
 }

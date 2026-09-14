@@ -1,5 +1,6 @@
 ﻿using BL.Interfaces;
 using DL.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Model.Common;
 using Model.DTOs;
 using Model.Entities;
@@ -16,6 +17,8 @@ namespace BL
     {
         //Inject
         private readonly IUserDL _userDL;
+        // khởi tạo biến mã hóa mật khẩu
+        private readonly PasswordHasher<User> _passwordHasher = new () ;
 
         public AuthBL(IUserDL userDL)
         {
@@ -23,7 +26,7 @@ namespace BL
         }
 
         /// <summary>
-        /// Kiểm tra thông tin đăng nhập
+        /// đăng nhập
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -38,8 +41,10 @@ namespace BL
                     "Email không tồn tại"
                 );
             }
+            // Kiểm tra mật khẩu nhập vào với chuỗi băm trong DB
+            var result = _passwordHasher.VerifyHashedPassword(user, user.Password, request.Password);
 
-            if (user.Password != request.Password)
+            if (result == PasswordVerificationResult.Failed)
             {
                 return ApiResponse<User>.ErrorResponse(
                     "INVALID_PASSWORD",
@@ -62,7 +67,7 @@ namespace BL
             );
         }
         /// <summary>
-        /// Kiểm tra thông tin đăng ký
+        ///  đăng ký
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
@@ -78,8 +83,15 @@ namespace BL
             {
                 throw new Exception("Mã nhân viên đã tồn tại");
             }
+            // mã hóa mật khẩu(băm)
+            request.Password = _passwordHasher.HashPassword(request, request.Password);
+
             // thêm mới
             long id = _userDL.Insert(request);
+
+            // xóa mật khẩu trước khi trả về
+            request.Password = string.Empty;
+
             request.Id = id; 
 
             return request;

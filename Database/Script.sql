@@ -1,0 +1,105 @@
+CREATE DATABASE IF NOT EXISTS LeaveRequestDB
+CHARACTER SET utf8mb4
+COLLATE utf8mb4_unicode_ci;
+
+USE LeaveRequestDB;
+//phòng ban
+CREATE TABLE DEPARTMENTS (
+    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    CODE VARCHAR(20) NOT NULL UNIQUE,
+    NAME VARCHAR(100) NOT NULL UNIQUE,
+    STATUS INT NOT NULL DEFAULT 1,
+    CREATED_AT DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UPDATED_AT DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+//nhân viên và quản lý
+CREATE TABLE USERS (
+    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    EMPLOYEE_CODE VARCHAR(20) NOT NULL UNIQUE,
+    FULL_NAME VARCHAR(100) NOT NULL,
+    EMAIL VARCHAR(150) NOT NULL UNIQUE,
+    PASSWORD VARCHAR(255) NOT NULL,
+    PHONE VARCHAR(20),
+    ADDRESS VARCHAR(255),
+    POSITION VARCHAR(100),
+    DEPARTMENT_ID BIGINT,
+    ROLE INT NOT NULL,
+    STATUS INT NOT NULL DEFAULT 1,
+    CREATED_AT DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UPDATED_AT DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT FK_USERS_DEPARTMENTS
+        FOREIGN KEY (DEPARTMENT_ID)
+        REFERENCES DEPARTMENTS(ID)
+);
+//loại nghỉ phép
+CREATE TABLE LEAVE_TYPES (
+    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    CODE VARCHAR(20) NOT NULL UNIQUE,
+    NAME VARCHAR(100) NOT NULL UNIQUE,
+    DESCRIPTION VARCHAR(500),
+    STATUS INT NOT NULL DEFAULT 1,
+    CREATED_AT DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UPDATED_AT DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+//đơn xin nghỉ phép
+CREATE TABLE LEAVE_REQUESTS (
+    ID BIGINT AUTO_INCREMENT PRIMARY KEY,
+    REQUEST_CODE VARCHAR(20) NOT NULL UNIQUE,
+    EMPLOYEE_ID BIGINT NOT NULL,
+    LEAVE_TYPE_ID BIGINT NOT NULL,
+    START_DATE DATE NOT NULL,
+    END_DATE DATE NOT NULL,
+    NUMBER_OF_DAYS DECIMAL(5,1) NOT NULL,
+    REASON VARCHAR(1000) NOT NULL,
+    NOTE VARCHAR(500),
+    HANDOVER_PERSON VARCHAR(100),
+    STATUS INT NOT NULL DEFAULT 1,
+    MANAGER_ID BIGINT,
+    MANAGER_RESPONSE VARCHAR(1000),
+    PROCESSED_AT DATETIME,
+    CREATED_AT DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UPDATED_AT DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT FK_REQUESTS_EMPLOYEE
+        FOREIGN KEY (EMPLOYEE_ID)
+        REFERENCES USERS(ID),
+
+    CONSTRAINT FK_REQUESTS_LEAVE_TYPE
+        FOREIGN KEY (LEAVE_TYPE_ID)
+        REFERENCES LEAVE_TYPES(ID),
+
+    CONSTRAINT FK_REQUESTS_MANAGER
+        FOREIGN KEY (MANAGER_ID)
+        REFERENCES USERS(ID)
+);
+
+// thêm mặc định phòng ban
+INSERT INTO DEPARTMENTS (CODE, NAME, STATUS)
+VALUES
+('IT', 'Phòng Công nghệ thông tin', 1),
+('HR', 'Phòng Nhân sự', 1),
+('ACC', 'Phòng Kế toán', 1),
+('FIN', 'Phòng Tài chính', 1),
+('ADMIN', 'Phòng Hành chính', 1),
+('MKT', 'Phòng Marketing', 1),
+('SALE', 'Phòng Kinh doanh', 1),
+('CS', 'Phòng Chăm sóc khách hàng', 1),
+('LEGAL', 'Phòng Pháp chế', 1),
+('OTHER', 'Khác', 1);
+
+// thêm mặc định loại nghỉ phép
+INSERT INTO LEAVE_TYPES (CODE, NAME, DESCRIPTION, STATUS)
+VALUES
+('ANNUAL', 'Nghỉ phép năm', 'Sử dụng ngày phép năm', 1),
+('SICK', 'Nghỉ ốm', 'Nghỉ do ốm hoặc điều trị bệnh', 1),
+('PERSONAL', 'Nghỉ việc riêng', 'Nghỉ để giải quyết công việc cá nhân', 1),
+('MARRIAGE', 'Nghỉ kết hôn', 'Nghỉ để tổ chức kết hôn', 1),
+('BEREAVEMENT', 'Nghỉ tang', 'Nghỉ khi gia đình có tang', 1),
+('MATERNITY', 'Nghỉ thai sản', 'Nghỉ liên quan đến sinh con và chăm sóc con', 1),
+('UNPAID', 'Nghỉ không lương', 'Nghỉ không hưởng lương', 1),
+('OTHER', 'Khác', 'Trường hợp khác, ghi rõ trong lý do nghỉ', 1);
+
+//thêm dữ liệu mẫu cho quản lý
+INSERT INTO Users (employee_code, full_name, email, password, phone, address, position, department_id, role, status, created_at, updated_at)
+VALUES ('MN001', N'Việt Đức', 'tranvietducManager@gmail.com', '123456', '01080880699', N'Hà Nội', N'Quản lý', 1, 2, 1, NOW(), NOW());

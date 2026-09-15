@@ -42,8 +42,11 @@ namespace API.Controllers
         public IActionResult Register(User user)
         {
             var result = _authBL.Register(user);
-
-            return Ok(ApiResponse<User>.SuccessResponse(result, "Đăng ký thành công"));
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
     }
 }

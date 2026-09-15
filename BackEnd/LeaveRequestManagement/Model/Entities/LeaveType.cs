@@ -9,7 +9,7 @@ namespace Model.Entities
     public class LeaveType
     {
         // id loại nghỉ phép
-        public int Id { get; set; }
+        public long Id { get; set; }
         // mã nghỉ phép
         public string Code { get; set; }
         // tên loại nghỉ phép

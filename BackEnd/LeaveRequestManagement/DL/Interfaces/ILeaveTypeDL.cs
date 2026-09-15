@@ -12,8 +12,7 @@ namespace DL.Interfaces
         /// <summary>
         /// lấy thông tin loại nghỉ phép theo id
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
-        List<LeaveType>? GetLeaveTypeById(int id);
+        List<LeaveType>? GetLeaveType();
     }
 }

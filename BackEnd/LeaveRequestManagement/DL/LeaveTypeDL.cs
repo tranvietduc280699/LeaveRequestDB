@@ -4,6 +4,7 @@ using Model.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,36 +22,37 @@ namespace DL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<LeaveType>? GetLeaveTypeById(int id)
+        public List<LeaveType>? GetLeaveType()
         {
             
-            string sql = $"SELECT * FROM LeaveTypes WHERE Id = {id}";
+            string sql = $"SELECT * FROM LEAVE_TYPES";
 
             // thực thi connection string để lấy dữ liệu từ cơ sở dữ liệu
             using var connection = _connectionString.GetConnection();
             connection.Open();
 
             var command = new MySqlConnector.MySqlCommand(sql, connection);
-            command.Parameters.AddWithValue("@id", id);
+            using var reader = command.ExecuteReader();
 
-            var result = command.ExecuteReader();
-            if (!result.Read())
+            var leaveTypes = new List<LeaveType>();
+
+            // Đọc lần lượt tất cả bản ghi
+            while (reader.Read())
             {
-                return null;
-            }
-            return new List<LeaveType>
-            {
-                new LeaveType
+                leaveTypes.Add(new LeaveType
                 {
-                    Id = result.GetInt32("Id"),
-                    Code = result.GetString("Code"),
-                    Name = result.GetString("Name"),
-                    Description = result.GetString("Description"),
-                    Status = result.GetInt32("Status"),
-                    CreatedAt = result.GetDateTime("CreatedAt"),
-                    UpdatedAt = result.GetDateTime("UpdatedAt")
-                }
-            };
+                    Id = reader.GetInt64("ID"),
+                    Code = reader.GetString("CODE"),
+                    Name = reader.GetString("NAME"),
+                    Description = reader.IsDBNull(reader.GetOrdinal("DESCRIPTION"))? null: reader.GetString("DESCRIPTION"),
+                    Status = reader.GetInt32("STATUS"),
+                    CreatedAt = reader.GetDateTime("CREATED_AT"),
+                    UpdatedAt = reader.GetDateTime("UPDATED_AT")
+                });
+            }
+
+            // Không có dữ liệu thì trả về danh sách rỗng
+            return leaveTypes;
 
         }
     }

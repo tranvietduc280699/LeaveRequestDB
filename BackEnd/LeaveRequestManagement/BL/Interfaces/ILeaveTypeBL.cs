@@ -1,4 +1,5 @@
-﻿using Model.Entities;
+﻿using Model.Common;
+using Model.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,7 @@ namespace BL.Interfaces
         /// <summary>
         /// lấy thông tin loại nghỉ phép theo id
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
-        List<LeaveType>? GetLeaveTypeById(int id);
+        ApiResponse<List<LeaveType>>? GetLeaveType();
     }
 }

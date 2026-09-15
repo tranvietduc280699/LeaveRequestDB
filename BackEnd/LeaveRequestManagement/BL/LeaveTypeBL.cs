@@ -1,5 +1,7 @@
 ﻿using BL.Interfaces;
+using DL;
 using DL.Interfaces;
+using Model.Common;
 using Model.Entities;
 using Org.BouncyCastle.Security;
 using System;
@@ -24,10 +26,15 @@ namespace BL
         /// <param name="id"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public List<LeaveType>? GetLeaveTypeById(int id)
+        public ApiResponse<List<LeaveType>> GetLeaveType()
         {
-            
-            return _leaveTypeDL.GetLeaveTypeById(id);
+            var leaveTypes = _leaveTypeDL.GetLeaveType() ?? new List<LeaveType>();
+            if (leaveTypes == null)
+            {
+                return ApiResponse<List<LeaveType>>.ErrorResponse("LEAVE_TYPE_NOT_FOUND", "Không tìm thấy loại nghỉ phép");
+            }
+            return ApiResponse<List<LeaveType>>.SuccessResponse(
+                leaveTypes, "Lấy danh sách loại nghỉ phép thành công");
         }
     }
 }

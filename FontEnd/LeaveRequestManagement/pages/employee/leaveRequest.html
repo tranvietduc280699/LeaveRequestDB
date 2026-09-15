@@ -57,9 +57,11 @@
                         <label for="numberOfDays">Số ngày nghỉ</label>
                         <input type="number" id="numberOfDays" step="0.5" readonly>
                     </div>
-                    <div class="form-group">
+                   <div class="form-group">
                         <label for="handoverPerson">Người bàn giao</label>
-                        <input type="text" id="handoverPerson" maxlength="100" placeholder="Nhập tên người nhận bàn giao">
+                        <select id="handoverPerson">
+                            <option value="">Chọn người bàn giao</option>
+                        </select>
                     </div>
                     <div class="form-group full-width">
                         <label for="reason">Lý do nghỉ <b>*</b></label>

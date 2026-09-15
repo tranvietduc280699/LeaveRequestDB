@@ -27,7 +27,10 @@ namespace DL
                 SELECT ID, CODE, NAME, STATUS, CREATED_AT, UPDATED_AT
                 FROM DEPARTMENTS
                 WHERE STATUS = 1
-                ORDER BY NAME";
+                ORDER BY
+                    CASE WHEN CODE = 'OTHER' THEN 1 ELSE 0 END ASC,
+                    CODE ASC;
+            ";
 
             using MySqlCommand command = new MySqlCommand(sql, connection);
             using MySqlDataReader reader = command.ExecuteReader();

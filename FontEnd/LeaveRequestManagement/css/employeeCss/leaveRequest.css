@@ -88,8 +88,6 @@ main {
                         height: 43px;
                     }
                     input[readonly] {
-                        color: #2563eb;
-                        font-weight: bold;
                         background: #f8fafc;
                     }
                     textarea {

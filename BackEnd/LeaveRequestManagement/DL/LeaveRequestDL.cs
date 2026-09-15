@@ -1,5 +1,6 @@
 ﻿using DL.Database;
 using DL.Interfaces;
+using Model.DTOs;
 using Model.Entities;
 using Model.Enums;
 using MySqlConnector;
@@ -42,6 +43,8 @@ namespace DL
             using var command = new MySqlCommand(sql, connection);
             command.Parameters.AddWithValue("@RequestCode", request.RequestCode);
             command.Parameters.AddWithValue("@EmployeeId", request.EmployeeId);
+
+            // Thêm các tham số dùng chung cho việc tạo và sửa đơn
             AddContentParameters(command, request);
             command.Parameters.AddWithValue("@Status", (int)LeaveRequestStatus.Pending);
             command.ExecuteNonQuery();
@@ -70,6 +73,7 @@ namespace DL
             command.Parameters.AddWithValue("@EmployeeId", employeeId);
             command.Parameters.AddWithValue("@Pending", (int)LeaveRequestStatus.Pending);
             command.Parameters.AddWithValue("@Cancelled", (int)LeaveRequestStatus.Cancelled);
+            // Thực hiện truy vấn và kiểm tra số lượng bản ghi bị ảnh hưởng
             return command.ExecuteNonQuery() > 0;
         }
 
@@ -88,9 +92,9 @@ namespace DL
              LeaveRequestStatus? status = null)
         {
             string sql = @"
-        SELECT *
-        FROM LEAVE_REQUESTS
-        WHERE EMPLOYEE_ID = @EmployeeId";
+                SELECT *
+                FROM LEAVE_REQUESTS
+                WHERE EMPLOYEE_ID = @EmployeeId";
             using var connection = _databaseConnection.GetConnection();
             connection.Open();
             using var command = new MySqlCommand(sql, connection);
@@ -111,6 +115,7 @@ namespace DL
                 command.Parameters.AddWithValue("@Status", (int)status.Value);
             }
             command.CommandText += " ORDER BY CREATED_AT DESC, ID DESC;";
+            // Thực hiện truy vấn và đọc dữ liệu
             var requests = new List<LeaveRequest>();
             using var reader = command.ExecuteReader();
             while (reader.Read())
@@ -120,8 +125,10 @@ namespace DL
             return requests;
         }
         /// <summary>
-        /// Lấy chi tiết đơn theo ID; BL phải kiểm tra quyền xem
+        /// Lấy chi tiết đơn theo ID;
         /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public LeaveRequest? GetById(long id)
         {
             const string sql = @"
@@ -132,12 +139,19 @@ namespace DL
             connection.Open();
             using var command = new MySqlCommand(sql, connection);
             command.Parameters.AddWithValue("@Id", id);
+            // Thực hiện truy vấn và đọc dữ liệu
             using var reader = command.ExecuteReader();
             return reader.Read() ? MapLeaveRequest(reader) : null;
         }
         /// <summary>
         /// Quản lý xem đơn của nhân viên cùng phòng ban
+        /// user : quản lý
         /// </summary>
+        /// <param name="managerId"></param>
+        /// <param name="searchText"></param>
+        /// <param name="leaveTypeId"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
         public List<LeaveRequest> GetForManager(
             long managerId,
             string? searchText = null,
@@ -155,8 +169,7 @@ namespace DL
                   AND E.ROLE = 1";
             using var connection = _databaseConnection.GetConnection();
             connection.Open();
-            using var command = new MySqlCommand();
-            command.Connection = connection;
+            using var command = new MySqlCommand(sql, connection);
             command.Parameters.AddWithValue("@ManagerId", managerId);
             if (!string.IsNullOrWhiteSpace(searchText))
             {
@@ -177,6 +190,7 @@ namespace DL
             }
             sql += " ORDER BY LR.CREATED_AT DESC, LR.ID DESC;";
             command.CommandText = sql;
+            // Thực hiện truy vấn và đọc dữ liệu
             var requests = new List<LeaveRequest>();
             using var reader = command.ExecuteReader();
             while (reader.Read())
@@ -187,15 +201,16 @@ namespace DL
         }
         /// <summary>
         /// Quản lý duyệt hoặc từ chối đơn còn chờ duyệt
+        /// user: quản lý
         /// </summary>
-        public bool ProcessPending(
-            long id,
-            long managerId,
-            LeaveRequestStatus status,
-            string? responseContent)
+        /// <param name="id"></param>
+        /// <param name="managerId"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public bool ProcessPending(long id,long managerId,ProcessLeaveRequest request)
         {
-            if (status != LeaveRequestStatus.Approved &&
-                status != LeaveRequestStatus.Rejected)
+            if (request.Status != LeaveRequestStatus.Approved &&
+                request.Status != LeaveRequestStatus.Rejected)
             {
                 return false;
             }
@@ -219,14 +234,20 @@ namespace DL
             using var command = new MySqlCommand(sql, connection);
             command.Parameters.AddWithValue("@Id", id);
             command.Parameters.AddWithValue("@ManagerId", managerId);
-            command.Parameters.AddWithValue("@Status", (int)status);
+            command.Parameters.AddWithValue("@Status", (int)request.Status);
             command.Parameters.AddWithValue("@Pending", (int)LeaveRequestStatus.Pending);
-            command.Parameters.AddWithValue("@ResponseContent", (object?)responseContent ?? DBNull.Value);
+            command.Parameters.AddWithValue("@ResponseContent", (object?)request.ResponseContent?.Trim() ?? DBNull.Value);
+
+            // Thực hiện truy vấn và kiểm tra số lượng bản ghi bị ảnh hưởng
             return command.ExecuteNonQuery() > 0;
         }
         /// <summary>
         /// Sửa nội dung đơn của nhân viên khi còn chờ duyệt
+        /// user: nhân viên
         /// </summary>
+        /// <param name="request"></param>
+        /// <param name="employeeId"></param>
+        /// <returns></returns>
         public bool UpdatePending(LeaveRequest request, long employeeId)
         {
             const string sql = @"
@@ -248,12 +269,17 @@ namespace DL
             command.Parameters.AddWithValue("@Id", request.Id);
             command.Parameters.AddWithValue("@EmployeeId", employeeId);
             command.Parameters.AddWithValue("@Pending", (int)LeaveRequestStatus.Pending);
+            // Thêm các tham số dùng chung cho việc tạo và sửa đơn
             AddContentParameters(command, request);
+            // Thực hiện truy vấn và kiểm tra số lượng bản ghi bị ảnh hưởng
             return command.ExecuteNonQuery() > 0;
         }
+
         /// <summary>
-        /// Các tham số dùng chung khi tạo và sửa đơn
+        /// khỏi tạo hàm thêm các tham số dùng chung cho việc tạo và sửa đơn nghỉ phép
         /// </summary>
+        /// <param name="command"></param>
+        /// <param name="request"></param>
         private static void AddContentParameters(MySqlCommand command, LeaveRequest request)
         {
             command.Parameters.AddWithValue("@LeaveTypeId", request.LeaveTypeId);
@@ -265,8 +291,10 @@ namespace DL
             command.Parameters.AddWithValue("@HandoverPerson", (object?)request.HandoverPerson ?? DBNull.Value);
         }
         /// <summary>
-        /// Chuyển một dòng dữ liệu DB thành entity LeaveRequest
+        /// Mapping dữ liệu từ MySqlDataReader sang đối tượng LeaveRequest
         /// </summary>
+        /// <param name="reader"></param>
+        /// <returns></returns>
         private static LeaveRequest MapLeaveRequest(MySqlDataReader reader)
         {
             return new LeaveRequest

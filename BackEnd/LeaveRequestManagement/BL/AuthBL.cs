@@ -72,16 +72,18 @@ namespace BL
         /// <param name="request"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public User Register(User request)
+        public ApiResponse<User> Register(User request)
         {
             if (_userDL.CheckEmailExists(request.Email))
             {
-                throw new Exception("Email đã tồn tại");
+                return ApiResponse<User>.ErrorResponse(
+                    "EMAIL_EXISTS", "Email đã tồn tại");
             }
 
             if (_userDL.CheckEmployeeCodeExists(request.EmployeeCode))
             {
-                throw new Exception("Mã nhân viên đã tồn tại");
+                return ApiResponse<User>.ErrorResponse(
+                    "EMPLOYEE_CODE_EXISTS", "Mã nhân viên đã tồn tại");
             }
             // mã hóa mật khẩu(băm)
             request.Password = _passwordHasher.HashPassword(request, request.Password);
@@ -92,9 +94,10 @@ namespace BL
             // xóa mật khẩu trước khi trả về
             request.Password = string.Empty;
 
-            request.Id = id; 
+            request.Id = id;
 
-            return request;
+            return ApiResponse<User>.SuccessResponse(
+                    request, "Đăng ký thành công");
         }
     }
 }

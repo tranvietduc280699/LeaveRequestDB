@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Model.Common;
 using Model.Entities;
+using MySqlX.XDevAPI.Common;
 
 namespace API.Controllers
 {
@@ -16,19 +17,19 @@ namespace API.Controllers
             _leaveTypeBL = leaveTypeBL;
         }
         /// <summary>
-        /// lấy thông tin loại nghỉ phép theo id
+        /// lấy thông tin loại nghỉ phép
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpGet("{id}")]
-        public IActionResult GetLeaveTypeById(int id)
+        [HttpGet]
+        public IActionResult GetLeaveType()
         {
-            var leaveType =  _leaveTypeBL.GetLeaveTypeById(id);
-            if (leaveType == null)
+            var leaveType =  _leaveTypeBL.GetLeaveType();
+            if (!leaveType.Success)
             {
-                return NotFound(ApiResponse<LeaveType>.ErrorResponse("LEAVE_TYPE_NOT_FOUND", "Không tìm thấy loại nghỉ phép"));
+                return BadRequest(leaveType);
             }
-            return Ok(ApiResponse<List<LeaveType>>.SuccessResponse( leaveType, "Lấy loại nghỉ phép thành công"));
+            return Ok(leaveType);
         }
     }
 }

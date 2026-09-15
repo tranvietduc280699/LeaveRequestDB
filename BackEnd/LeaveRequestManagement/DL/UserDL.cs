@@ -1,5 +1,6 @@
 ﻿using DL.Database;
 using DL.Interfaces;
+using Model.DTOs;
 using Model.Entities;
 using Model.Enums;
 using MySqlConnector;
@@ -33,7 +34,7 @@ namespace DL
 
             using var command = new MySqlCommand(sql, connection);
             command.Parameters.AddWithValue("@Email", email);
-
+            // Thực hiện truy vấn và kiểm tra số lượng bản ghi bị ảnh hưởng
             return Convert.ToInt64(command.ExecuteScalar()) > 0;
         }
         /// <summary>
@@ -78,7 +79,7 @@ namespace DL
 
             using var command = new MySqlCommand(sql, connection);
             command.Parameters.AddWithValue("@Email", email);
-
+            // thực hiện truy vấn và đọc dữ liệu
             using var reader = command.ExecuteReader();
 
             if (!reader.Read())
@@ -155,10 +156,74 @@ namespace DL
             command.Parameters.AddWithValue("@DepartmentId", user.DepartmentId);
             command.Parameters.AddWithValue("@Role", user.Role);
             command.Parameters.AddWithValue("@Status", user.Status);
-
+            // Thực hiện truy vấn 
             command.ExecuteNonQuery();
 
             return command.LastInsertedId;
+        }
+        /// <summary>
+        /// Cập nhật họ tên, số điện thoại và địa chỉ
+        /// </summary>
+        /// <param name="id">ID người dùng</param>
+        /// <param name="request">Thông tin cần cập nhật</param>
+        /// <returns>Cập nhật thành công hay không</returns>
+        public bool UpdateProfile(long id, UpdateProfileRequest request)
+        {
+            string sql = @"
+                UPDATE USERS
+                SET FULL_NAME = @FullName,
+                    PHONE = @Phone,
+                    ADDRESS = @Address,
+                    UPDATED_AT = NOW()
+                WHERE ID = @Id;
+            ";
+
+            using var connection = _databaseConnection.GetConnection();
+            connection.Open();
+
+            using var command = new MySqlCommand(sql, connection);
+
+            command.Parameters.AddWithValue("@Id", id);
+            command.Parameters.AddWithValue("@FullName", request.FullName);
+            command.Parameters.AddWithValue("@Phone", request.Phone);
+            command.Parameters.AddWithValue("@Address",(object?)request.Address ?? DBNull.Value);
+
+            // Thực hiện truy vấn và kiểm tra số lượng bản ghi bị ảnh hưởng
+            return command.ExecuteNonQuery() > 0;
+        }
+        /// <summary>
+        /// Lấy thông tin người quản lý theo
+        /// </summary>
+        /// <returns></returns>
+        public List<ManagerOption> GetManagers()
+        {
+            string sql = @"
+                SELECT ID, FULL_NAME
+                FROM USERS
+                WHERE ROLE = 2
+                  AND STATUS = 1
+                ORDER BY FULL_NAME;
+            ";
+
+            using var connection = _databaseConnection.GetConnection();
+            connection.Open();
+
+            using var command = new MySqlCommand(sql, connection);
+            //Thực hiện truy vấn
+            using var reader = command.ExecuteReader();
+
+            var managers = new List<ManagerOption>();
+            // thêm vào list
+            while (reader.Read())
+            {
+                managers.Add(new ManagerOption
+                {
+                    Id = reader.GetInt64("ID"),
+                    FullName = reader.GetString("FULL_NAME")
+                });
+            }
+
+            return managers;
         }
     }
 }

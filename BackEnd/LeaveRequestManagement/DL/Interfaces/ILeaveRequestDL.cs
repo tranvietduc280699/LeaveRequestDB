@@ -1,4 +1,5 @@
-﻿using Model.Entities;
+﻿using Model.DTOs;
+using Model.Entities;
 using Model.Enums;
 using System;
 using System.Collections.Generic;
@@ -79,7 +80,6 @@ namespace DL.Interfaces
         bool ProcessPending(
             long id,
             long managerId,
-            LeaveRequestStatus status,
-            string? responseContent);
+            ProcessLeaveRequest request);
     }
 }

@@ -27,14 +27,20 @@ namespace API
                         .AllowAnyMethod();
                 });
             });
-
+            // Đăng ký Dependency Injection (DI)
             builder.Services.AddSingleton<DatabaseConnection>();
-
+            // Đăng ký tầng truy cập dữ liệu (DL)
             builder.Services.AddScoped<IUserDL, UserDL>();
             builder.Services.AddScoped<IDepartmentDL, DepartmentDL>();
-
+            builder.Services.AddScoped<ILeaveRequestDL, LeaveRequestDL>();
+            builder.Services.AddScoped<ILeaveTypeDL, LeaveTypeDL>();
+            builder.Services.AddScoped<IUserDL, UserDL>();
+            // Đăng ký tầng xử lý nghiệp vụ (BL)
             builder.Services.AddScoped<IAuthBL, AuthBL>();
             builder.Services.AddScoped<IDepartmentBL, DepartmentBL>();
+            builder.Services.AddScoped<ILeaveRequestBL, LeaveRequestBL>();
+            builder.Services.AddScoped<ILeaveTypeBL, LeaveTypeBL>();
+            builder.Services.AddScoped<IUserBL, UserBL>();
 
             var app = builder.Build();
 

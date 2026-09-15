@@ -22,7 +22,7 @@ namespace BL.Interfaces
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        User Register(User request);
+        ApiResponse<User> Register(User request);
 
 
     }

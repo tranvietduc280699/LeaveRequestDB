@@ -1,4 +1,5 @@
-﻿using Model.Entities;
+﻿using Model.DTOs;
+using Model.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,5 +37,17 @@ namespace DL.Interfaces
         /// <returns></returns>
 
         long Insert(User user);
+        /// <summary>
+        /// Cập nhật họ tên, số điện thoại và địa chỉ của người dùng
+        /// </summary>
+        /// <param name="id">ID người dùng cần cập nhật</param>
+        /// <param name="request">Thông tin cần cập nhật</param>
+        /// <returns>Cập nhật thành công hay không</returns>
+        bool UpdateProfile(long id, UpdateProfileRequest request);
+        /// <summary>
+        /// Lấy danh sách tên những người quản lý 
+        /// </summary>
+        /// <returns></returns>
+        List<ManagerOption> GetManagers();
     }
 }

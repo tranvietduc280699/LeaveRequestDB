@@ -196,3 +196,17 @@ main {
         }
     }
 }
+/* hủy đơn trên bản ghi*/
+.cancel-request-button {
+    padding: 7px 12px;
+    border: 1px solid #fecaca;
+    border-radius: 6px;
+    background: #fef2f2;
+    color: #dc2626;
+    font-size: 13px;
+    cursor: pointer;
+}
+.cancel-request-button:hover {
+    background: #fee2e2;
+    border-color: #ef4444;
+}

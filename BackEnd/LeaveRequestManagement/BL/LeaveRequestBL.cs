@@ -83,10 +83,12 @@ namespace BL
                 return ApiResponse<List<LeaveRequest>>.ErrorResponse(
                     "INVALID_EMPLOYEE", "Thông tin nhân viên không hợp lệ");
             }
-            if (status.HasValue)
+            // Có truyền trạng thái và giá trị không thuộc enum thì mới báo lỗi
+            if (status.HasValue && !System.Enum.IsDefined(typeof(LeaveRequestStatus), status.Value))
             {
                 return ApiResponse<List<LeaveRequest>>.ErrorResponse(
-                    "INVALID_STATUS", "Trạng thái không hợp lệ");
+                    "INVALID_STATUS",
+                    "Trạng thái không hợp lệ");
             }
             var requests = _leaveRequestDL.GetByEmployee(employeeId, requestCode, leaveTypeId, status);
             return ApiResponse<List<LeaveRequest>>.SuccessResponse(

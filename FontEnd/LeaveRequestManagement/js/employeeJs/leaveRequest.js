@@ -94,13 +94,12 @@ submitButton.addEventListener("click", async () => {
     request.handoverPerson =document.getElementById("handoverPerson").value;
     try {
         const result = await postApi(`/employeeRequest?employeeId=${user.id}`, request);
-        if (!result.success) {
+       if (result.success === false) {
             alert(result.message);
             return;
         }
-        return alert(result.message);
-        // chuyển trang
-        window.location.href = "./myRequest.html";
+        alert(result.message);
+        window.location.href = "../employee/myRequest.html";
 
     } catch (error) {
         console.error(error);

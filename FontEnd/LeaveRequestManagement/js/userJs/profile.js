@@ -1,3 +1,5 @@
+import { getApi } from "../api.js";
+
 /*mở popup chỉnh sửa hồ sơ cá nhân*/
 const response=await fetch("../popups/profilePopup.html");
 const popupHtml=await response.text();   // chuyển đổi nội dung HTML thành chuỗi
@@ -38,4 +40,59 @@ if(Number(currentUser.role)===2){
     requestLink.textContent="Tạo đơn nghỉ";
     managementLink.href="../employee/myRequest.html";
     managementLink.textContent="Đơn của tôi";
+}
+
+
+
+// Lấy thông tin người dùng đã lưu khi đăng nhập
+const user = JSON.parse(localStorage.getItem("currentUser"));
+// Lấy tên phòng ban theo departmentId
+async function loadDepartment() {
+    try {
+        const result = await getApi("/departments");
+        if (!result.success) {
+            console.error(result.message);
+            return;
+        }
+        const department = (result.data || []).find(item =>
+            String(item.id) === String(user.departmentId)
+        );
+        document.getElementById("infoDepartment").textContent =
+            department ? department.name : "Chưa có thông tin";
+    } catch (error) {
+        console.error("Lỗi tải phòng ban:", error);
+    }
+}
+// Chưa đăng nhập thì chuyển về trang đăng nhập
+if (!user) {
+    window.location.href = "../auth/login.html";
+} else {
+    // Thông tin trên header
+    document.getElementById("fullName").textContent = user.fullName;
+    document.getElementById("position").textContent = user.position || "Chưa cập nhật";
+    // Thông tin bên dưới ảnh đại diện
+    document.getElementById("profileFullName").textContent = user.fullName;
+    document.getElementById("profileEmployeeCode").textContent = user.employeeCode;
+    // Thông tin trong các ô hồ sơ
+    document.getElementById("infoFullName").textContent = user.fullName;
+    document.getElementById("infoEmployeeCode").textContent = user.employeeCode;
+    document.getElementById("infoEmail").textContent = user.email;
+    document.getElementById("infoPhone").textContent = user.phone || "Chưa cập nhật";
+    document.getElementById("infoPosition").textContent = user.position || "Chưa cập nhật";
+    document.getElementById("infoAddress").textContent = user.address || "Chưa cập nhật";
+    document.getElementById("infoDepartment").textContent = "Chưa có thông tin";
+    // Hiển thị trạng thái tài khoản
+    const isActive = Number(user.status) === 1;
+    const profileStatus = document.getElementById("profileStatus");
+    profileStatus.classList.toggle("inactive", !isActive);
+    profileStatus.querySelector(".status-text").textContent =
+        isActive ? "Đang hoạt động" : "Ngừng hoạt động";
+    // Hiển thị vai trò tài khoản
+    document.getElementById("accountInformation").textContent =
+    `Chức vụ: ${user.position || "Chưa cập nhật"}`;
+    
+    document.getElementById("accountInformation").textContent =
+        `Vai trò: ${roleNames[Number(user.role)] || "Không xác định"}`;
+    // Tải tên phòng ban
+    loadDepartment();
 }

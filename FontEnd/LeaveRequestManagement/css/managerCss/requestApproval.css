@@ -3,59 +3,58 @@
     padding: 25px;
     overflow-y: auto;
     .summary {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 18px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
         .summary-item {
             display: flex;
             align-items: center;
-                gap: 15px;
-                padding: 20px;
-                background: white;
-                border-radius: 11px;
-                box-shadow: 0 3px 13px #0000000d;
+            gap: 15px;
+            padding: 20px;
+            background: white;
+            border-radius: 11px;
+            box-shadow: 0 3px 13px #0000000d;
+            .summary-icon {
+                width: 46px;
+                height: 46px;
+                display: grid;
+                place-items: center;
+                font-size: 26px;
+                font-weight: bold;
+                border-radius: 50%;
+            }
+            .summary-label {
+                color: #6b7280;
+                font-size: 13px;
+            }
+            .summary-number {
+                margin-top: 5px;
+                font-size: 25px;
+                font-weight: bold;
+            }
+            &.pending {
                 .summary-icon {
-                    width: 46px;
-                    height: 46px;
-                    display: grid;
-                    place-items: center;
-                    font-size: 26px;
-                    font-weight: bold;
-                    border-radius: 50%;
+                    color: #d97706;
+                    background: #fef3c7;
                 }
-                .summary-label {
-                    color: #6b7280;
-                    font-size: 13px;
+            }
+            &.approved {
+                .summary-icon {
+                    color: #15803d;
+                    background: #dcfce7;
                 }
-                .summary-number {
-                    margin-top: 5px;
-                    font-size: 25px;
-                    font-weight: bold;
-                }
-                &.pending {
-                    .summary-icon {
-                        color: #d97706;
-                        background: #fef3c7;
-                    }
-                }
-                &.approved {
-                    .summary-icon {
-                        color: #15803d;
-                        background: #dcfce7;
-                    }
-                }
-                &.rejected {
-                    .summary-icon {
-                        color: #dc2626;
-                        background: #fee2e2;
-                    }
+            }
+            &.rejected {
+                .summary-icon {
+                    color: #dc2626;
+                    background: #fee2e2;
                 }
             }
         }
     }
     .filter-box {
         display: flex;
-        align-items: end;
+        align-items: flex-end;
         gap: 14px;
         margin-top: 20px;
         padding: 20px;
@@ -74,7 +73,7 @@
                 font-size: 12px;
                 font-weight: bold;
             }
-            input,select {
+            input, select {
                 width: 100%;
                 height: 42px;
                 padding: 0 12px;
@@ -129,11 +128,16 @@
         }
         .request-table {
             overflow-x: auto;
+            .empty-data {
+                padding: 30px 15px;
+                color: #94a3b8;
+                text-align: center;
+            }
             table {
                 width: 100%;
                 min-width: 1050px;
                 border-collapse: collapse;
-                th,td {
+                th, td {
                     padding: 15px;
                     text-align: left;
                     border-bottom: 1px solid #e5e7eb;
@@ -182,6 +186,7 @@
                         padding: 6px 10px;
                         font-size: 11px;
                         border-radius: 20px;
+                        white-space: nowrap;
                         &.pending {
                             color: #b45309;
                             background: #fef3c7;
@@ -193,6 +198,10 @@
                         &.rejected {
                             color: #dc2626;
                             background: #fee2e2;
+                        }
+                        &.cancelled {
+                            color: #4b5563;
+                            background: #f3f4f6;
                         }
                     }
                     .actions {
@@ -227,3 +236,4 @@
             }
         }
     }
+}

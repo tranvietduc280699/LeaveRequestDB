@@ -71,7 +71,16 @@ async function loadRequests() {
             // Gán dữ liệu vào từng cột
             values.forEach(value => {
                 const cell = document.createElement("td");
-                cell.textContent = value ?? "";
+                
+                // thêm style cho cột trạng thái (cột thứ 6)
+               if (index === 5) {
+                    const badge = document.createElement("span");
+                    badge.className = `status-badge status-${request.status}`;
+                    badge.textContent = value ?? "";
+                    cell.appendChild(badge);
+                } else {
+                    cell.textContent = value ?? "";
+                }
                 row.appendChild(cell);
             });
             requestTableBody.appendChild(row);

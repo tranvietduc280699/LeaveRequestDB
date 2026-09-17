@@ -80,9 +80,20 @@
                         </div>
                         <a href="./requestApproval.html">Xem tất cả</a>
                     </div>
-                    <div id="requestList" class="request-list">
-                        <div class="empty-data">Chưa có đơn nghỉ cần xử lý</div>
-                    </div>
+                   <table class="recent-request-table">
+                        <thead>
+                            <tr>
+                                <th>Mã đơn</th>
+                                <th>Nhân viên</th>
+                                <th>Thời gian nghỉ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requestList">
+                            <tr>
+                                <td colspan="3" class="empty-data">Đang tải dữ liệu...</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
                 <div class="quick-actions">
                     <div class="section-title">Thao tác nhanh</div>

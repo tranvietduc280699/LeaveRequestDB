@@ -129,6 +129,7 @@ function renderRequests(requests) {
         const actionCell = addCell("");
         const actions = document.createElement("div");
         actions.className = "actions";
+        
         // Nút chi tiết hiển thị ở mọi trạng thái
         const detailButton = document.createElement("button");
         detailButton.type = "button";
@@ -136,13 +137,16 @@ function renderRequests(requests) {
         detailButton.textContent = "Chi tiết";
         detailButton.dataset.id = request.id;
         actions.appendChild(detailButton);
+        
         // Chỉ cho duyệt hoặc từ chối đơn đang chờ duyệt
         if (Number(request.status) === 1) {
+            // nút duyệt
             const approveButton = document.createElement("button");
             approveButton.type = "button";
             approveButton.className = "approve-button";
             approveButton.textContent = "Duyệt";
             approveButton.dataset.id = request.id;
+            // nut từ chối
             const rejectButton = document.createElement("button");
             rejectButton.type = "button";
             rejectButton.className = "reject-button";

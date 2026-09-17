@@ -1,4 +1,5 @@
 import { getApi } from "../api.js";
+import "../authJs/logout.js";
 // Lấy thông tin người dùng đang đăng nhập
 const user = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -155,6 +156,7 @@ function renderRequests(requests) {
             actions.append(approveButton, rejectButton);
         }
         actionCell.appendChild(actions);
+        tableBody.appendChild(row);
     });
 }
 // Định dạng ngày thành dd/MM/yyyy

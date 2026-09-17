@@ -1,4 +1,5 @@
 import { getApi } from "../api.js";
+import "../authJs/logout.js";
 
 // lấy thông tin người dùng hiện tại từ localStorage 
 const user = JSON.parse(localStorage.getItem("currentUser"));
@@ -9,12 +10,6 @@ if (!user) {
     document.getElementById("fullName").textContent = user.fullName ?? "";
     document.getElementById("position").textContent = user.position ?? "";
     
-    // xửu lý đăng xuất
-    const logoutButton = document.getElementById("logoutButton");
-   logoutButton.addEventListener("click", () => {
-        localStorage.removeItem("currentUser");
-        window.location.href = "../auth/login.html";
-    });
 }
 
 // Lấy danh sách đơn và và thống kê tổng theo trạng thái
@@ -32,6 +27,9 @@ async function loadStatistics() {
             requests.filter(item => Number(item.status) === 2).length;
         document.getElementById("rejectedCount").textContent =
             requests.filter(item => Number(item.status) === 3).length;
+
+        // Gọi hiển thị danh sách đơn mới nhất
+        renderRecentRequests(requests);
     } catch (error) {
         console.error("Lỗi tải thống kê:", error);
     }
@@ -70,5 +68,12 @@ function renderRecentRequests(requests) {
         requestList.appendChild(row);
     });
 }
+// format thời gian hiển thị
+function formatDate(value) {
+    if (!value) return "";
+    const [year, month, day] = value.split("T")[0].split("-");
+    return `${day}/${month}/${year}`;
+}
+
 // Khi vào trang tải dữ liệu
 loadStatistics();

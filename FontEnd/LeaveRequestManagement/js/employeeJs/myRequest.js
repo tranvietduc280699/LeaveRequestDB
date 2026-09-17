@@ -1,4 +1,5 @@
 import { getApi, putApi } from "../api.js";
+import "../authJs/logout.js";
 // Lấy thông tin người dùng đang đăng nhập
 const user = JSON.parse(localStorage.getItem("currentUser"));
 if (!user) {
@@ -69,7 +70,7 @@ async function loadRequests() {
                 statusOption?.textContent || "Không xác định"
             ];
             // Gán dữ liệu vào từng cột
-            values.forEach(value => {
+            values.forEach((value, index) => {
                 const cell = document.createElement("td");
                 
                 // thêm style cho cột trạng thái (cột thứ 6)

@@ -211,7 +211,7 @@ namespace BL
             // tính tổng số ngày nghỉ
             decimal numberOfDays = (request.EndDate.Date - request.StartDate.Date).Days + 1;
             // tạo mã đơn nghỉ
-            string requestCode = "LR" + Guid.NewGuid().ToString().Substring(0,18);
+            string requestCode = "SR" + DateTime.Now.ToString("yyyyMMddHHmmss");
             // chuyển đổi thành entity
             var leaveRequest = new LeaveRequest
             {

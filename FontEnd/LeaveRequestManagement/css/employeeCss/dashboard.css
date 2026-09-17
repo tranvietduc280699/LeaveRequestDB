@@ -1,24 +1,31 @@
+* {
+    box-sizing: border-box;
+}
 body {
     display: flex;
-    overflow-y: auto;
+    height: 100vh;
+    margin: 0;
     .sidebar {
         position: fixed;
+        top: 0;
+        left: 0;
         width: 230px;
         height: 100vh;
-        padding: 28px 20px;
+        padding: 24px 20px;
         color: white;
         background: #1e3a8a;
         h2 {
-            margin-bottom: 35px;
+            margin: 0 0 28px;
         }
         nav {
             display: flex;
             flex-direction: column;
             gap: 8px;
             a {
-                padding: 13px;
+                padding: 12px;
                 color: #dbeafe;
                 border-radius: 8px;
+                text-decoration: none;
                 &:hover, &.active {
                     color: white;
                     background: #2563eb;
@@ -27,7 +34,7 @@ body {
         }
         button {
             position: absolute;
-            bottom: 25px;
+            bottom: 20px;
             left: 20px;
             width: 190px;
             padding: 12px;
@@ -42,29 +49,34 @@ body {
         }
     }
     main {
+        display: flex;
+        flex-direction: column;
         width: calc(100% - 230px);
-        min-height: 100vh;
+        height: 100vh;
+        min-width: 0;
         margin-left: 230px;
         header {
-            height: 75px;
+            flex-shrink: 0;
+            height: 65px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 30px;
+            padding: 0 24px;
             background: white;
             border-bottom: 1px solid #e5e7eb;
             h1 {
-                font-size: 21px;
+                margin: 0;
+                font-size: 20px;
             }
             p {
-                margin-top: 4px;
+                margin: 4px 0 0;
                 color: #6b7280;
                 font-size: 12px;
             }
             .user {
                 display: flex;
                 align-items: center;
-                gap: 12px;
+                gap: 10px;
                 text-align: right;
                 #fullName {
                     font-size: 14px;
@@ -76,72 +88,93 @@ body {
                     font-size: 12px;
                 }
                 .avatar {
-                    width: 42px;
-                    height: 42px;
+                    width: 38px;
+                    height: 38px;
                     object-fit: cover;
                     border-radius: 50%;
                 }
             }
         }
         .content {
-            padding:6px 30px 0px 30px;
+            flex: 1;
+            min-height: 0;
+            display: grid;
+            grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+            gap: 16px;
+            padding: 16px 24px;
             .overview {
                 display: grid;
-                grid-template-columns: 1fr 1.4fr;
-                gap: 22px;
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+                gap: 16px;
+                min-height: 0;
                 .company-card {
-                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+                    min-width: 0;
+                    min-height: 0;
                     background: #1e3a8a;
-                    border-radius: 16px;
+                    border-radius: 14px;
                     img {
+                        flex: 1;
+                        min-height: 0;
                         width: 100%;
-                        height: 287px;
+                        height: 0;
                         display: block;
                         object-fit: cover;
+                        border-radius: 14px 14px 0 0;
                     }
                     .company-content {
-                        padding: 18px;
+                        flex-shrink: 0;
+                        padding: 12px;
                         color: white;
                         text-align: center;
-
                         p {
-                            font-size: 13px;
+                            margin: 0;
+                            font-size: 12px;
                         }
                     }
                 }
                 .quick-actions {
-                    padding: 25px;
+                    display: flex;
+                    flex-direction: column;
+                    min-width: 0;
+                    min-height: 0;
+                    padding: 16px;
                     background: white;
-                    border-radius: 16px;
+                    border-radius: 14px;
                     h2 {
-                        margin-bottom: 18px;
-                        font-size: 18px;
+                        margin: 0 0 12px;
+                        font-size: 17px;
                     }
                     .action-list {
-                        display: flex;
-                        flex-direction: column;
-                        gap: 12px;
+                        flex: 1;
+                        min-height: 0;
+                        display: grid;
+                        grid-template-rows: repeat(3, minmax(0, 1fr));
+                        gap: 8px;
                         > a {
                             display: flex;
                             align-items: center;
-                            gap: 14px;
-                            padding: 15px;
+                            gap: 10px;
+                            min-width: 0;
+                            padding: 8px 12px;
                             color: #1f2937;
                             border: 1px solid #e5e7eb;
-                            border-radius: 10px;
-                            transition: 0.2s;
+                            border-radius: 9px;
+                            text-decoration: none;
                             &:hover {
                                 border-color: #2563eb;
-                                transform: translateX(4px);
+                                background: #f8fafc;
                             }
                             .action-icon {
-                                min-width: 43px;
-                                height: 43px;
+                                flex-shrink: 0;
+                                width: 34px;
+                                height: 34px;
                                 display: grid;
                                 place-items: center;
                                 color: white;
-                                font-size: 20px;
-                                border-radius: 10px;
+                                font-size: 18px;
+                                border-radius: 8px;
                                 &.blue {
                                     background: #2563eb;
                                 }
@@ -154,20 +187,21 @@ body {
                             }
                             div:nth-child(2) {
                                 flex: 1;
+                                min-width: 0;
                                 strong {
                                     display: block;
-                                    font-size: 14px;
+                                    font-size: 13px;
                                 }
                                 span {
                                     display: block;
-                                    margin-top: 4px;
+                                    margin-top: 3px;
                                     color: #6b7280;
-                                    font-size: 12px;
+                                    font-size: 11px;
                                 }
                             }
                             > b {
                                 color: #9ca3af;
-                                font-size: 24px;
+                                font-size: 20px;
                             }
                         }
                     }
@@ -175,60 +209,68 @@ body {
             }
             .bottom-content {
                 display: grid;
-                grid-template-columns: 2fr 1fr;
-                gap: 22px;
-                margin-top: 22px;
+                grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+                gap: 16px;
+                min-height: 0;
                 .employee-information {
-                    padding: 22px;
+                    min-width: 0;
+                    padding: 16px;
                     background: white;
-                    border-radius: 16px;
+                    border-radius: 14px;
                     .section-title {
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
-                        margin-bottom: 22px;
+                        gap: 10px;
+                        margin-bottom: 12px;
                         h2 {
-                            font-size: 18px;
+                            margin: 0;
+                            font-size: 17px;
                         }
                         p {
-                            margin-top: 4px;
+                            margin: 4px 0 0;
                             color: #6b7280;
-                            font-size: 12px;
+                            font-size: 11px;
                         }
                         a {
+                            flex-shrink: 0;
                             color: #2563eb;
-                            font-size: 13px;
+                            font-size: 12px;
                             font-weight: bold;
+                            text-decoration: none;
                         }
                     }
                     .information-grid {
                         display: grid;
-                        grid-template-columns: repeat(2, 1fr);
-                        gap: 18px;
-                        div {
-                            padding: 15px;
+                        grid-template-columns: repeat(2, minmax(0, 1fr));
+                        gap: 12px;
+                        > div {
+                            min-width: 0;
+                            padding: 14px 16px;
                             background: #f8fafc;
                             border-radius: 9px;
                             span {
                                 display: block;
-                                margin-bottom: 7px;
+                                margin-bottom: 6px;
                                 color: #6b7280;
                                 font-size: 12px;
                             }
                             strong {
                                 font-size: 14px;
+                                overflow-wrap: anywhere;
                             }
                         }
                     }
                 }
                 .notice {
-                    padding: 25px;
+                    min-width: 0;
+                    padding: 18px;
                     background: #fff7ed;
                     border: 1px solid #fed7aa;
-                    border-radius: 16px;
+                    border-radius: 14px;
                     .notice-icon {
-                        width: 38px;
-                        height: 38px;
+                        width: 32px;
+                        height: 32px;
                         display: grid;
                         place-items: center;
                         color: white;
@@ -237,23 +279,55 @@ body {
                         border-radius: 50%;
                     }
                     h2 {
-                        margin: 16px 0 9px;
-                        font-size: 17px;
+                        margin: 12px 0 8px;
+                        font-size: 16px;
                     }
                     p {
-                        margin-bottom: 18px;
+                        margin: 0 0 12px;
                         color: #6b7280;
-                        font-size: 13px;
-                        line-height: 1.6;
+                        font-size: 12px;
+                        line-height: 1.5;
                     }
                     a {
                         color: #ea580c;
-                        font-size: 13px;
+                        font-size: 12px;
                         font-weight: bold;
+                        text-decoration: none;
                     }
                 }
             }
         }
-       
+    }
+}
+@media (max-height: 720px) {
+    body main .content {
+        gap: 12px;
+        padding: 12px 20px;
+        .overview .quick-actions {
+            padding: 12px;
+            h2 {
+                margin-bottom: 8px;
+            }
+            .action-list > a {
+                padding: 5px 10px;
+            }
+        }
+        .bottom-content {
+            .employee-information {
+                padding: 12px;
+                .section-title {
+                    margin-bottom: 16px;
+                }
+                .information-grid {
+                    gap: 6px;
+                    > div {
+                        padding: 7px 10px;
+                    }
+                }
+            }
+            .notice {
+                padding: 14px;
+            }
+        }
     }
 }

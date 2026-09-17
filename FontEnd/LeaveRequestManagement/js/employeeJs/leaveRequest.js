@@ -1,6 +1,6 @@
 import { getApi, postApi } from "../api.js";
 import LeaveRequest from "../models/leaveRequestModel.js";
-
+import "../authJs/logout.js";
 // lấy thông tin trên local
 const user = JSON.parse(localStorage.getItem("currentUser"));
 if(!user){

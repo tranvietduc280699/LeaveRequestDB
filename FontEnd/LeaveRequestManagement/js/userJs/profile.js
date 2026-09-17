@@ -91,9 +91,13 @@ if (!user) {
     // Hiển thị vai trò tài khoản
     document.getElementById("accountInformation").textContent =
     `Chức vụ: ${user.position || "Chưa cập nhật"}`;
-    
+    // Chức vụ
+    const roleNames = {
+        1: "Nhân viên",
+        2: "Quản lý"
+    };
     document.getElementById("accountInformation").textContent =
-        `Vai trò: ${roleNames[Number(user.role)] || "Không xác định"}`;
+    `Vai trò: ${roleNames[Number(user.role)] ?? "Không xác định"}`;
     // Tải tên phòng ban
     loadDepartment();
 }

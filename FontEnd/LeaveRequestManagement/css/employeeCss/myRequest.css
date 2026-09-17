@@ -219,18 +219,22 @@ main {
     font-weight: 600;
     white-space: nowrap;
 }
+/* Chờ duyệt */
 .status-1 {
     background: #fef3c7;
-    color: #92400e;
+    color: #b45309;
 }
+/* Đã duyệt */
 .status-2 {
     background: #dcfce7;
-    color: #166534;
+    color: #15803d;
 }
+/* Từ chối */
 .status-3 {
     background: #fee2e2;
-    color: #991b1b;
+    color: #dc2626;
 }
+/* Đã hủy */
 .status-4 {
     background: #f3f4f6;
     color: #4b5563;

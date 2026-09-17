@@ -10,6 +10,7 @@ body {
     height: 100%;
     overflow: hidden;
     margin: 0 !important;
+    overflow-y: none !important;
 }
 
 body {

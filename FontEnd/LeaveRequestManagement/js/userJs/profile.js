@@ -1,4 +1,4 @@
-import { getApi } from "../api.js";
+import { getApi, putApi } from "../api.js";
 
 /*mở popup chỉnh sửa hồ sơ cá nhân*/
 const response=await fetch("../popups/profilePopup.html");
@@ -63,6 +63,7 @@ async function loadDepartment() {
         console.error("Lỗi tải phòng ban:", error);
     }
 }
+
 // Chưa đăng nhập thì chuyển về trang đăng nhập
 if (!user) {
     window.location.href = "../auth/login.html";
@@ -96,3 +97,54 @@ if (!user) {
     // Tải tên phòng ban
     loadDepartment();
 }
+
+// cập nhật thông tin lên form chỉnh sửa hồ sơ cá nhân (popup)
+document.getElementById("editProfileButton").addEventListener("click", () => {
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    if (!user) {
+        window.location.href = "../auth/login.html";
+        return;
+    }
+    // Gán thông tin vào các ô input
+    document.getElementById("editEmployeeCode").value = user.employeeCode || "";
+    document.getElementById("editFullName").value = user.fullName || "";
+    document.getElementById("editEmail").value = user.email || "";
+    document.getElementById("editPhone").value = user.phone || "";
+    document.getElementById("editAddress").value = user.address || "";
+    
+    // Hiển thị popup
+    document.getElementById("profilePopup").classList.add("show");
+});
+
+// Lưu thông tin cá nhân được nhập trên popup
+document.getElementById("saveProfileButton").addEventListener("click", async () => {
+    
+    // Chỉ gửi ba thông tin được chỉnh sửa
+    const request = {
+        fullName: document.getElementById("editFullName").value.trim(),
+        phone: document.getElementById("editPhone").value.trim(),
+        address: document.getElementById("editAddress").value.trim()
+    };
+    try {
+        const result = await putApi(`/users?id=${user.id}`, request);
+        if (!result.success) {
+           alert(result.message);
+            return;
+        }
+        // Cập nhật thông tin đang lưu trên trình duyệt
+        Object.assign(user, request);
+        localStorage.setItem("currentUser", JSON.stringify(user));
+        
+        // Hiển thị thông tin mới trên trang hồ sơ
+        document.getElementById("fullName").textContent = user.fullName;
+        document.getElementById("profileFullName").textContent = user.fullName;
+        document.getElementById("infoFullName").textContent = user.fullName;
+        document.getElementById("infoPhone").textContent = user.phone;
+        document.getElementById("infoAddress").textContent = user.address || "Chưa cập nhật";
+        // Đóng popup sau khi lưu thành công
+        document.getElementById("profilePopup").classList.remove("show");
+        alert(result.message);
+    } catch (error) {
+        console.error("Lỗi cập nhật hồ sơ:", error);
+    }
+});

@@ -44,10 +44,23 @@ namespace DL.Interfaces
         /// <param name="request">Thông tin cần cập nhật</param>
         /// <returns>Cập nhật thành công hay không</returns>
         bool UpdateProfile(long id, UpdateProfileRequest request);
+
         /// <summary>
         /// Lấy danh sách tên những người quản lý 
         /// </summary>
         /// <returns></returns>
         List<ManagerOption> GetManagers();
+
+        /// <summary>
+        /// lấy tất cả danh sách người dùng 
+        /// user: quản lý
+        /// </summary>
+        /// <returns></returns>
+
+        Task<List<User>> GetEmployeesAsync(
+            long? departmentId,
+            string? keyword,
+            int? status
+        );
     }
 }

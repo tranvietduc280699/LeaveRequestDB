@@ -1,5 +1,6 @@
-import { getApi } from "../api.js";
+import { getApi,putApi } from "../api.js";
 import "../authJs/logout.js";
+import {leaveRequestPopup} from "../componentPopup/leaveRequestPopup.js";
 // Lấy thông tin người dùng đang đăng nhập
 const user = JSON.parse(localStorage.getItem("currentUser"));
 
@@ -33,7 +34,26 @@ async function loadLeaveTypes() {
 // Lấy danh sách đơn thuộc phạm vi quản lý
 async function loadRequests() {
     try {
-        const result = await getApi(`/managerRequest?managerId=${user.id}`);
+         // lấy các giá trị bộ lọc
+        const keyword = document.getElementById("keyword");
+        const leaveTypeFilter = document.getElementById("leaveTypeFilter");
+        const statusFilter = document.getElementById("statusFilter");
+
+        // tạo param
+        const params = new URLSearchParams();
+        params.set("managerId", user.id);
+        if (keyword.value.trim()) {
+            params.set("keyword", keyword.value.trim());
+        }
+        if (leaveTypeFilter.value) {
+            params.set("leaveTypeId", leaveTypeFilter.value);
+        }
+        if (statusFilter.value) {
+            params.set("status", statusFilter.value);
+        }
+
+        // gọi api theo bộ lọc
+        const result = await getApi(`/managerRequest?${params.toString()}`);
         if (!result.success) {
             alert(result.message);
             return;
@@ -95,7 +115,7 @@ function renderRequests(requests) {
         employee.appendChild(information);
         employeeCell.appendChild(employee);
         
-        // Cột loại nghỉ: lấy tên từ API hoặc option đã tải
+        // Cột loại nghỉ
         const typeOption = Array.from(leaveTypeFilter.options)
             .find(option => option.value === String(request.leaveTypeId));
         addCell(request.leaveTypeName || typeOption?.textContent || "Không xác định");
@@ -125,8 +145,9 @@ function renderRequests(requests) {
         badge.className = `status ${status?.className ?? ""}`;
         badge.textContent = status?.name ?? "Không xác định";
         statusCell.appendChild(badge);
-        
-        // Cột thao tác
+        ///
+        /// Cột thao tác
+        ///
         const actionCell = addCell("");
         const actions = document.createElement("div");
         actions.className = "actions";
@@ -138,7 +159,12 @@ function renderRequests(requests) {
         detailButton.textContent = "Chi tiết";
         detailButton.dataset.id = request.id;
         actions.appendChild(detailButton);
-        
+
+        // chọn xem chi tiết (mở popup)
+        detailButton.addEventListener("click", () => {
+            leaveRequestPopup(request.id);
+        });
+
         // Chỉ cho duyệt hoặc từ chối đơn đang chờ duyệt
         if (Number(request.status) === 1) {
             // nút duyệt
@@ -153,6 +179,57 @@ function renderRequests(requests) {
             rejectButton.className = "reject-button";
             rejectButton.textContent = "Từ chối";
             rejectButton.dataset.id = request.id;
+
+             // xử lý duyệt đơn
+            approveButton.addEventListener("click", async () => {
+                try {
+                    const confirmApprove = confirm("Bạn có chắc muốn duyệt đơn này không?");
+                    if (!confirmApprove) {
+                        return;
+                    }
+                    const data={
+                        status:2,
+                        managerResponse:"Đơn nghỉ đã được duyệt"
+                    };
+                    const result=await putApi(`/managerRequest/${request.id}/process?managerId=${user.id}`,data);
+                    if(!result.success){
+                        alert(result.message);
+                        return;
+                    }
+                    alert(result.message);
+
+                    // tải lại danh sách sau khi duyệt
+                    await loadRequests();
+                } catch (error) {
+                    console.error("Lỗi duyệt đơn:", error);
+                    alert(error.message || "Không thể duyệt đơn nghỉ phép");
+                }
+            });
+           // xử lý từ chối đơn
+            rejectButton.addEventListener("click", async () => {
+                try {
+                    const confirmReject = confirm("Bạn có chắc muốn từ chối đơn này không?");
+                    if (!confirmReject) {
+                        return;
+                    }
+                    const data = {
+                        status: 3,
+                        managerResponse: "Đơn nghỉ đã bị từ chối"
+                    };
+                    const result = await putApi(`/managerRequest/${request.id}/process?managerId=${user.id}`, data);
+                    if (!result.success) {
+                        alert(result.message);
+                        return;
+                    }
+                    alert(result.message);
+                    // tải lại danh sách sau khi từ chối
+                    await loadRequests();
+                } catch (error) {
+                    console.error("Lỗi từ chối đơn:", error);
+                    alert(error.message || "Không thể từ chối đơn nghỉ phép");
+                }
+            });
+            // thêm 2 nút
             actions.append(approveButton, rejectButton);
         }
         actionCell.appendChild(actions);
@@ -165,6 +242,18 @@ function formatDate(value) {
     const [year, month, day] = value.split("T")[0].split("-");
     return `${day}/${month}/${year}`;
 }
+
+// Bấm tìm kiếm
+document.getElementById("searchButton").addEventListener("click", () => {
+    loadRequests();
+});
+
+// Đặt lại bộ lọc
+document.getElementById("resetButton").addEventListener("click", () => {
+    document.getElementById("keyword").value = "";
+    document.getElementById("leaveTypeFilter").value = "";
+    document.getElementById("statusFilter").value = "";
+});
 
 // Gọi các hàm khi vào trang
 if (!user) {

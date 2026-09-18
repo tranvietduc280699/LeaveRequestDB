@@ -36,6 +36,7 @@ namespace API.Controllers
 
         /// <summary>
         /// lấy danh sách tên quản lý
+        /// user: nhân viên (để phụ trách đơn xin nghỉ)
         /// </summary>
         /// <returns></returns>
         [HttpGet("managers")]
@@ -48,6 +49,23 @@ namespace API.Controllers
                 return BadRequest(result);
             }
 
+            return Ok(result);
+        }
+        /// <summary>
+        /// Lấy danh sách nhân viên theo điều kiện lọc
+        /// </summary>
+        /// <param name="departmentId">Id phòng ban, không truyền thì lấy tất cả</param>
+        /// <param name="keyword">Tìm theo tên, mã nhân viên hoặc email</param>
+        /// <param name="status">1: đang hoạt động, 2: ngừng hoạt động</param>
+        /// <returns></returns>
+        [HttpGet("employees")]
+        public async Task<IActionResult> GetEmployees([FromQuery] long? departmentId,[FromQuery] string? keyword,[FromQuery] int? status)
+        {
+            var result = await _userBL.GetEmployeesAsync(departmentId,keyword,status);
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
             return Ok(result);
         }
     }

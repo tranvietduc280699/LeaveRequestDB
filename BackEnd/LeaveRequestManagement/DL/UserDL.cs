@@ -4,6 +4,7 @@ using Model.DTOs;
 using Model.Entities;
 using Model.Enums;
 using MySqlConnector;
+using MySqlX.XDevAPI.Common;
 
 namespace DL
 {
@@ -191,8 +192,10 @@ namespace DL
             // Thực hiện truy vấn và kiểm tra số lượng bản ghi bị ảnh hưởng
             return command.ExecuteNonQuery() > 0;
         }
+
         /// <summary>
-        /// Lấy thông tin người quản lý theo
+        /// Lấy danh sách quản lý
+        /// user: nhân viên (để chọn người phụ trách đơn)
         /// </summary>
         /// <returns></returns>
         public List<ManagerOption> GetManagers()
@@ -224,6 +227,93 @@ namespace DL
             }
 
             return managers;
+        }
+        /// <summary>
+        /// lấy danh sách nhân viên
+        /// </summary>
+        /// <param name="departmentId"></param>
+        /// <param name="keyword"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public async Task<List<User>> GetEmployeesAsync(long? departmentId,string? keyword,int? status)
+        {
+            var sql = @"
+                SELECT
+                    U.ID AS Id,
+                    U.EMPLOYEE_CODE AS EmployeeCode,
+                    U.FULL_NAME AS FullName,
+                    U.EMAIL AS Email,
+                    U.PHONE AS Phone,
+                    U.ADDRESS AS Address,
+                    U.POSITION AS Position,
+                    U.DEPARTMENT_ID AS DepartmentId,
+                    D.NAME AS DepartmentName,
+                    U.ROLE AS Role,
+                    U.STATUS AS Status,
+                    U.CREATED_AT AS CreatedAt,
+                    U.UPDATED_AT AS UpdatedAt
+                FROM USERS U
+                LEFT JOIN DEPARTMENTS D
+                    ON U.DEPARTMENT_ID = D.ID
+                WHERE U.ROLE = 1
+                  AND (
+                        @DepartmentId IS NULL
+                        OR U.DEPARTMENT_ID = @DepartmentId
+                  )
+                  AND (
+                        @Keyword IS NULL
+                        OR @Keyword = ''
+                        OR U.FULL_NAME LIKE CONCAT('%', @Keyword, '%')
+                        OR U.EMPLOYEE_CODE LIKE CONCAT('%', @Keyword, '%')
+                        OR U.EMAIL LIKE CONCAT('%', @Keyword, '%')
+                  )
+                  AND (
+                        @Status IS NULL
+                        OR U.STATUS = @Status
+                  )
+                ORDER BY U.FULL_NAME;
+            ";
+            using var connection = _databaseConnection.GetConnection();
+            connection.Open();
+
+            using var command = new MySqlCommand(sql , connection);
+            // truyền param
+            command.Parameters.AddWithValue("@DDepartmentId", departmentId.HasValue ? departmentId.Value : DBNull.Value);
+            command.Parameters.AddWithValue("@keyword", string.IsNullOrEmpty(keyword) ? DBNull.Value : keyword);
+            command.Parameters.AddWithValue("@status", status.HasValue ? status.Value : DBNull.Value);
+            // thực hiện truy vấn;
+            using var reader = await command.ExecuteReaderAsync();
+
+            // khởi tạo list
+            var users = new List<User>();
+
+            while (await reader.ReadAsync())
+            {
+                var user = new User
+                {
+                    Id = Convert.ToInt64(reader["Id"]),
+                    EmployeeCode = reader["EmployeeCode"].ToString()!,
+                    FullName = reader["FullName"].ToString()!,
+                    Email = reader["Email"].ToString()!,
+                    Phone = reader["Phone"] == DBNull.Value ? null : reader["Phone"].ToString(),
+                    Address = reader["Address"] == DBNull.Value ? null : reader["Address"].ToString(),
+                    Position = reader["Position"] == DBNull.Value ? null : reader["Position"].ToString(),
+                    DepartmentId = reader["DepartmentId"] == DBNull.Value
+                    ? null
+                    : Convert.ToInt64(reader["DepartmentId"]),
+                                DepartmentName = reader["DepartmentName"] == DBNull.Value
+                    ? null
+                    : reader["DepartmentName"].ToString(),
+                    Role = (UserRole)Convert.ToInt32(reader["Role"]),
+                    Status = (UserStatus)Convert.ToInt32(reader["Status"]),
+                    CreatedAt = Convert.ToDateTime(reader["CreatedAt"]),
+                    UpdatedAt = Convert.ToDateTime(reader["UpdatedAt"])
+                };
+
+                users.Add(user);
+            }
+
+            return users;
         }
     }
 }

@@ -2,6 +2,8 @@
 using DL.Interfaces;
 using Model.Common;
 using Model.DTOs;
+using Model.Entities;
+using Model.Enums;
 
 
 namespace BL
@@ -76,8 +78,10 @@ namespace BL
                 true,
                 "Cập nhật thông tin cá nhân thành công");
         }
+
         /// <summary>
         /// Lấy danh sách tên quản lý
+        /// user: nhân viên (để chọn người phụ trách đơn)
         /// </summary>
         /// <returns></returns>
         public ApiResponse<List<ManagerOption>> GetManagers()
@@ -87,6 +91,48 @@ namespace BL
             return ApiResponse<List<ManagerOption>>.SuccessResponse(
                 managers,
                 "Lấy danh sách người quản lý thành công");
+        }
+        /// <summary>
+        /// Lấy danh sách nhân viên theo điều kiện lọc
+        /// </summary>
+        /// <param name="departmentId">Id phòng ban, null thì lấy tất cả phòng ban</param>
+        /// <param name="keyword">Từ khóa tìm theo tên, mã nhân viên hoặc email</param>
+        /// <param name="status">Trạng thái nhân viên, null thì lấy tất cả trạng thái</param>
+        /// <returns></returns>
+        public async Task<ApiResponse<List<User>>> GetEmployeesAsync(
+            long? departmentId,
+            string? keyword,
+            int? status)
+        {
+            try
+            {
+                // Xử lý keyword
+                keyword = string.IsNullOrWhiteSpace(keyword)? null: keyword.Trim();
+
+                // Kiểm tra departmentId
+                if (departmentId.HasValue && departmentId.Value <= 0)
+                {
+                    return ApiResponse<List<User>>.ErrorResponse(
+                        "INVALID_DEPARTMENT",
+                        "Phòng ban không hợp lệ."
+                    );
+                }
+
+                // Gọi xuống DL
+                var employees = await _userDL.GetEmployeesAsync(departmentId,keyword,status);
+
+                return ApiResponse<List<User>>.SuccessResponse(
+                    employees,
+                    "Lấy danh sách nhân viên thành công."
+                );
+            }
+            catch (Exception ex)
+            {
+                return ApiResponse<List<User>>.ErrorResponse(
+                    "ERROR",
+                    ex.Message
+                );
+            }
         }
     }
 }

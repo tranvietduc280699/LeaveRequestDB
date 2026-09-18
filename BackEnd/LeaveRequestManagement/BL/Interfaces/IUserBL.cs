@@ -24,5 +24,16 @@ namespace BL.Interfaces
         /// </summary>
         /// <returns></returns>
         ApiResponse<List<ManagerOption>> GetManagers();
+
+        /// <summary>
+        /// lấy tất cả danh sách người dùng 
+        /// user: quản lý
+        /// </summary>
+        /// <returns></returns>
+        Task<ApiResponse<List<User>>> GetEmployeesAsync(
+             long? departmentId,
+             string? keyword,
+             int? status
+         );
     }
 }

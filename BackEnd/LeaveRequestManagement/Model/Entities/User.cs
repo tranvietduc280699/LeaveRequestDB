@@ -9,37 +9,39 @@ namespace Model.Entities
 {
     public class User
     {
-        // ID
+        // id
         public long Id { get; set; }
 
-        // EMPLOYEE_CODE
+        // mã người dùng
         public string EmployeeCode { get; set; } = string.Empty;
 
-        // FULL_NAME
+        // tên người dùng
         public string FullName { get; set; } = string.Empty;
 
-        //  EMAIL
+        //  email
         public string Email { get; set; } = string.Empty;
 
-        // PASSWORD
+        // mật khẩu người dùng
         public string Password { get; set; } = string.Empty;
 
-        // PHONE
+        // số điện thoại
         public string? Phone { get; set; }
 
-        //  ADDRESS
+        //  địa chỉ
         public string? Address { get; set; }
 
-        //  POSITION
+        //  chức vụ
         public string? Position { get; set; }
 
-        // DEPARTMENT_ID
+        // id phòng ban
         public long? DepartmentId { get; set; }
+        // tên phòng ban
+        public string? DepartmentName { get; set; }
 
-        //  ROLE
+        //  vai trò
         public UserRole Role { get; set; }
 
-        //  STATUS
+        //  trạng thái
         public UserStatus Status { get; set; }
 
         // CREATED_AT

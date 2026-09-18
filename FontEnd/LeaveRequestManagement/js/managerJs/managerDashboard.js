@@ -21,6 +21,7 @@ async function loadStatistics() {
             return;
         }
         const requests = result.data || [];
+        // bind số lượng theo trạng thái
         document.getElementById("pendingCount").textContent =
             requests.filter(item => Number(item.status) === 1).length;
         document.getElementById("approvedCount").textContent =
@@ -34,6 +35,23 @@ async function loadStatistics() {
         console.error("Lỗi tải thống kê:", error);
     }
 }
+
+// Lấy tổng số nhân viên và bind lên giao diện
+async function loadEmployeeCount() {
+    try {
+        const result = await getApi(`/Users/employees`);
+        if (!result.success) {
+            alert(result.message);
+            return;
+        }
+        const employees = result.data || [];
+        document.getElementById("employeeCount").textContent = employees.length;
+
+    } catch (error) {
+        console.error("Lỗi tải số lượng nhân viên:", error);
+    }
+}
+
 
 // hiển thị đơn mới nhất trên giao diện (3 bản ghi)
 function renderRecentRequests(requests) {
@@ -77,3 +95,4 @@ function formatDate(value) {
 
 // Khi vào trang tải dữ liệu
 loadStatistics();
+loadEmployeeCount();
